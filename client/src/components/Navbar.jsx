@@ -71,8 +71,12 @@ const SmallScreenMenu = () => {
   return (
     <div className="flex flex-row justify-center text-center items-center gap-16 text-xs absolute top-16 -right-3 w-40 h-auto py-5 bg-white rounded z-10">
       <div className="flex flex-col text-center items-center gap-4">
-        <div>Home</div>
-        <div>About us</div>
+        <NavLink to="/">
+          <div>Home</div>
+        </NavLink>
+        <NavLink to="aboutus">
+          <div>About us</div>
+        </NavLink>
         <div>
           <button
             //onClick={displayServices}
@@ -114,8 +118,12 @@ const LargeScreenMenu = (props) => {
     <div className="flex flex-row justify-start items-center gap-40 md:gap-20">
       {/* navbar contents */}
       <div className="flex flex-row gap-4 ">
-        <div>Home</div>
-        <div>About us</div>
+        <NavLink to="/">
+          <div>Home</div>
+        </NavLink>
+        <NavLink to="aboutus">
+          <div>About us</div>
+        </NavLink>
         <div>
           <button
             onClick={displayServices}
@@ -142,7 +150,7 @@ const LargeScreenMenu = (props) => {
         <div>Product</div>
       </div>
       <div className="flex flex-row gap-4 justify-end items-center absolute lg:right-8 md:right-4">
-        \{/* Shopping Cart */}
+        {/* Shopping Cart */}
         <div className="text-sm lg:mr-6">
           <ShoppingCartCheckoutIcon /> Cart
         </div>

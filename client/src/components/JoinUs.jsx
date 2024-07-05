@@ -5,7 +5,7 @@ import { OurMission } from "./OurmissionandServices";
 const JoinUs = () => {
   return (
     <>
-      {joinUsContent.map((content, index) => {
+      {JoinUsContent.map((content, index) => {
         const {
           img1,
           img2,
@@ -20,7 +20,7 @@ const JoinUs = () => {
             img1={img1}
             img2={img2}
             orangecontent={orangecontent}
-            greencontent ={greencontent}
+            greencontent={greencontent}
             blackcontent={blackcontent}
             button={button}
           />
@@ -31,7 +31,7 @@ const JoinUs = () => {
 };
 
 // ---------------- Join Us Contents --------------------
-const joinUsContent = [
+const JoinUsContent = [
   {
     img1: "./images/menwalking.svg",
     img2: "./images/atfield.svg",
@@ -40,7 +40,10 @@ const joinUsContent = [
     blackcontent:
       "Join our team and help us connect farmers directly with customers. We're constantly looking for dedicated individuals who share our passion for sustainable agriculture and local communities. You'll work with a supportive team and have the opportunity to make a meaningful impact while gaining valuable experience in the industry. You are just a step away to join us in supporting local farmers and creating a more sustainable future.",
     button: "Join Us",
+    reverse: true,
+    ourteam: "Our Team",
   },
 ];
 
 export default JoinUs;
+export { JoinUsContent };

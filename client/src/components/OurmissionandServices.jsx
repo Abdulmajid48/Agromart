@@ -39,6 +39,8 @@ const OurMission = (props) => {
     blackcontent,
     button,
     reverse,
+    aboutus,
+    ourteam,
   } = props;
   return (
     <>
@@ -46,7 +48,7 @@ const OurMission = (props) => {
       <div
         className={`h-[530px] sm:h-[410px] pt-10 w-full ${
           reverse && " h-[480px] md:h-[400px] lg:h-[480px] pt-0"
-        }`}
+        }, ${aboutus && "hidden"}`}
       >
         <div
           className={`relative flex sm:flex-row flex-col justify-center lg:gap-32 md:gap-16 sm:gap-56 sm:pr-10 pl-8 ${
@@ -78,7 +80,7 @@ const OurMission = (props) => {
           {/* Side Contents */}
           <div className="flex flex-col gap-3 md:gap-2 items-start justify-center md:w-1/2 lg:w-1/2 pt-5 sm:pt-0 lg:pt-16 font-['Open_Sans']">
             <p className="text-[#C76001] text-xl sm:text-3xl font-['Odor_Mean_Chey'] font-bold">
-              {orangecontent}
+              {ourteam || orangecontent}
             </p>
             <p className="text-[#218225] text-xl sm:text-3xl font-bold md:pr-6">
               {greencontent}
@@ -128,9 +130,9 @@ const OurMissionContents = [
       "Designed for everyone to participate in a healthy food system with ease.",
     blackcontent:
       "At Agromart, we provide the perfect service for connecting farmers with customers looking for the freshiest, healthiest, and most sustainable produce. Our platform is designed to make it easy for everyone to participate in a sustainable and healthy food system. With our services, you can support local farmers and get the highest quality fruits and vegetables directly from the source. Whether you're a farmer looking to expand your customer base or for expert consultation or a customer looking for the best produce, we're here to help you.",
-    button: "",
     reverse: true,
+    aboutus: true,
   },
 ];
 export default OurmissionandServices;
-export { OurMission };
+export { OurMission, OurMissionContents };
