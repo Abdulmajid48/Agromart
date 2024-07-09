@@ -100,12 +100,16 @@ const SmallScreenMenu = () => {
           </div> */}
         </div>
         <div>Product</div>
-        <button className="h-9 w-20 text-xs border-solid border border-[#218225] text-[#218225] rounded-md">
-          Sign In
-        </button>
-        <button className="h-9 w-20 text-xs border-solid border bg-[#218225] text-[#FFFFFF] rounded-md">
-          Sign Up
-        </button>
+        <NavLink to="signin">
+          <button className="h-9 w-20 text-xs border-solid border border-[#218225] text-[#218225] rounded-md">
+            Sign In
+          </button>
+        </NavLink>
+        <NavLink to="signup">
+          <button className="h-9 w-20 text-xs border-solid border bg-[#218225] text-[#FFFFFF] rounded-md">
+            Sign Up
+          </button>
+        </NavLink>
       </div>
     </div>
   );

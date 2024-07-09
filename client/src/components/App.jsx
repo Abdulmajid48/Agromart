@@ -12,6 +12,10 @@ import SharedLayout from "../pages/SharedLayout";
 import Home from "../pages/Home";
 // About Us Page
 import AboutUs from "../pages/AboutUs";
+import Products from "../pages/Products";
+import ProtectedRoute from "./ProtectedRoute";
+
+
 
 // createContext 
 export const ResponsiveWidth = createContext();
@@ -36,6 +40,14 @@ function App() {
           <Route path="/" element={<SharedLayout />}>
             <Route index element={<Home />} />
             <Route path="aboutus" element={<AboutUs />} />
+            <Route
+              path="products"
+              element={
+                <ProtectedRoute>
+                  <Products />
+                </ProtectedRoute>
+              }
+            />
           </Route>
           <Route path="signup" element={<Signup />} />
           <Route path="signin" element={<Signin />} />

@@ -27,7 +27,7 @@ const SubService = (props) => {
   return (
     <>
       <div
-        className="flex flex-col gap-5 w-96 sm:w-2/3 h-56 sm:h-72 lg:h-64 pl-5 sm:pl-4 pt-5 sm:pt-2 md:mt-20 lg:mt-10 pr-5 sm:pr-2 bg-{#FFFFFF} font-['Open_Sans'] rounded-xl relative"
+        className="flex flex-col gap-5 w-96 sm:w-2/3 h-56 sm:h-72 lg:h-64 pl-9 sm:pl-4 pt-5 sm:pt-2 md:mt-20 lg:mt-10 pr-5 sm:pr-2 bg-{#FFFFFF} font-['Open_Sans'] rounded-xl relative"
         style={{ boxShadow: "14px 22px 52px -12px rgba(127, 127, 127, 0.1)" }}
       >
         <div className="flex flex-row justify-start items-center gap-3">

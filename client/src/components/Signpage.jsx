@@ -8,8 +8,12 @@ import { ResponsiveWidth } from "./App";
 // Material Icons
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
+import { NavLink } from "react-router-dom";
+
+// axios.defaults.withCredentials = true;
 
 function Signpage(props) {
+  const { display, sign, btn, account, google } = props;
   // import axios and localhost
   const { axios, localhost } = useContext(ResponsiveWidth);
   // navigate to another page
@@ -19,7 +23,7 @@ function Signpage(props) {
   const [visible, setVisible] = useState(false);
   // Controlled Input for the page
   const [formData, setFormData] = useState({
-    name: "",
+    fullname: "",
     email: "",
     password: "",
   });
@@ -45,16 +49,24 @@ function Signpage(props) {
     e.preventDefault();
     const { fullname, email, password } = formData;
     try {
-      const res = await axios.post(`${localhost}/register`, {
-        fullname,
-        email,
-        password,
-      });
+      const res = await axios.post(
+        `${localhost}/register`,
+        {
+          fullname,
+          email,
+          password,
+        },
+        { withCredentials: "include" }
+      );
+      console.log(res);
       setResponse(res.data);
-      if (res.data === "save") {
-        navigate("/aboutus");
+      console.log(response);
+      if (res.data) {
+        console.log(res.data);
+        // navigate("/products");
       } else {
         console.log(res.data);
+        navigate("/signup");
       }
     } catch (err) {
       console.log(err);
@@ -63,24 +75,55 @@ function Signpage(props) {
   // Handle Submit for Signin ---- Login
   const handleSubmitLogin = async (e) => {
     e.preventDefault();
-    const { email, password } = formData;
+    const { email:username, password } = formData;
     try {
-      const res = await axios.post("http://localhost:3000/login", {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        `${localhost}/login`,
+        {
+          username,
+          password,
+        },
+        { withCredentials: "include" }
+      );
       setResponse(res.data);
-      console.log(response);
-      if (res.data.login) {
-        navigate("/aboutus");
+      console.log(res);
+      if (res.data==="user is certified") {
+        navigate("/products");
         console.log(res.data);
       } else {
-        console.log("hello");
+       
+        console.log("no user found");
       }
     } catch (err) {
       console.log(err);
     }
   };
+  // const handleGoogle = async (e) => {
+  //   e.preventDefault();
+    // const res = await axios.get(`${localhost}/auth/google`, {
+    //   withCredentials: "include",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //     "Access-Control-Allow-Credentials": true
+    //   },
+    // });
+    // console.log(res);
+    // try {
+    //   const res = await axios.get(`${localhost}/auth/google`, {
+    //     withCredentials: "include",
+    //   });
+    //   setResponse(res.data);
+    //   console.log(res);
+    // } catch (err) {
+    //   console.log(err);
+    // }
+  // };
+  const handleGoogle = async (e) => {
+    e.preventDefault();
+    window.location.href = `${localhost}/auth/google`;
+  };
+  
   return (
     <div className="h-dvh w-dvw flex justify-center items-center ">
       {/* Background div image */}
@@ -91,20 +134,22 @@ function Signpage(props) {
         }}
       >
         {/* Website Name */}
-        <p className="text-white absolute lg:top-10 md:top-[70px] top-16 left-5 sm:left-16 md:left-24 text-sm lg:text-3xl md:text-2xl sm:text-xl font-bold font-['Odor_Mean_Chey']">
-          Agromart
-        </p>
+        <NavLink to="/">
+          <p className="text-white absolute lg:top-10 md:top-[70px] top-16 left-5 sm:left-16 md:left-24 text-sm lg:text-3xl md:text-2xl sm:text-xl font-bold font-['Odor_Mean_Chey']">
+            Agromart
+          </p>
+        </NavLink>
         {/* Sign in/up div */}
         <div className="w-5/6 sm:w-3/4 md:w-2/3 lg:w-1/3 h-2/3 sm:h-5/6 m-auto lg:pb-10 bg-white rounded-lg flex justify-center items-center">
           <div className="sm:h-full pt-4 w-5/6 m-auto">
             <p className="text-black text-2xl mb-3 font-['Open_Sans'] font-semibold">
-              {props.sign}
+              {sign}
             </p>
             <div className="flex flex-col m-auto">
               {/* Name input and label */}
               <div
                 className="flex flex-col"
-                style={{ display: props.display ? null : "none" }}
+                style={{ display: !display && "none" }}
               >
                 <label
                   className="mb-2 text-sm text-[#575E6F] font-['Open_Sans']"
@@ -174,18 +219,16 @@ function Signpage(props) {
                 {/* sign up/in button */}
                 <div>
                   <button
-                    onClick={
-                      props.display ? handleSubmitRegister : handleSubmitLogin
-                    }
+                    onClick={display ? handleSubmitRegister : handleSubmitLogin}
                     className="bg-[#218225] h-9 w-full rounded-md text-center text-white text-sm font-['Open_Sans']"
                   >
-                    {props.btn}
+                    {btn}
                   </button>
                 </div>
                 {/* Remember me and Forget Password */}
                 <div
                   className="flex flex-row justify-between text-xs pb-3"
-                  style={{ display: !props.display ? null : "none" }}
+                  style={{ display: !display ? null : "none" }}
                 >
                   <div className="flex flex-row gap-1">
                     <input type="checkbox" className="accent-[#333333]" />
@@ -201,17 +244,21 @@ function Signpage(props) {
                 </div>
                 {/* Sign up/in with google */}
                 <div className="">
-                  <button className="flex flex-row justify-center items-center gap-3 bg-white h-9 w-full rounded-md text-center text-sm border border-[#218225]">
+                  <button
+                    onClick={handleGoogle}
+                    className="flex flex-row justify-center items-center gap-3 bg-white h-9 w-full rounded-md text-center text-sm border border-[#218225]"
+                  >
+                  
                     {/* google icon */}
                     <img src="./images/google.svg" alt="" className="h-5" />
                     <div className="text-[#218225] font-['Open_Sans']">
-                      {props.google}
+                      {google}
                     </div>
                   </button>
                 </div>
                 {/* Redirect to sign in/up */}
                 <div className="text-center text-xs mb-10 font-['poppins']">
-                  {props.account}
+                  {account}
                 </div>
               </div>
             </div>
