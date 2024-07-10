@@ -10,8 +10,6 @@ import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import { NavLink } from "react-router-dom";
 
-// axios.defaults.withCredentials = true;
-
 function Signpage(props) {
   const { display, sign, btn, account, google } = props;
   // import axios and localhost
@@ -27,8 +25,6 @@ function Signpage(props) {
     email: "",
     password: "",
   });
-  // Responses from database --for password
-  const [response, setResponse] = useState(null);
   // ------------------------------------------//
   // handlechange for input value
   const handleChange = (e) => {
@@ -44,6 +40,8 @@ function Signpage(props) {
       return !preValue;
     });
   }
+
+  // ---------------------------------------------------------------------------------------//
   // Handle Submit for Signup ---- Register
   const handleSubmitRegister = async (e) => {
     e.preventDefault();
@@ -58,14 +56,10 @@ function Signpage(props) {
         },
         { withCredentials: "include" }
       );
-      console.log(res);
-      setResponse(res.data);
-      console.log(response);
-      if (res.data) {
-        console.log(res.data);
-        // navigate("/products");
+      const { isLoggedIn } = res.data;
+      if (isLoggedIn) {
+        navigate("/products");
       } else {
-        console.log(res.data);
         navigate("/signup");
       }
     } catch (err) {
@@ -75,7 +69,7 @@ function Signpage(props) {
   // Handle Submit for Signin ---- Login
   const handleSubmitLogin = async (e) => {
     e.preventDefault();
-    const { email:username, password } = formData;
+    const { email: username, password } = formData;
     try {
       const res = await axios.post(
         `${localhost}/login`,
@@ -85,45 +79,22 @@ function Signpage(props) {
         },
         { withCredentials: "include" }
       );
-      setResponse(res.data);
-      console.log(res);
-      if (res.data==="user is certified") {
+      const { isLoggedIn } = res.data;
+      if (isLoggedIn) {
         navigate("/products");
-        console.log(res.data);
       } else {
-       
-        console.log("no user found");
+        navigate("/signin");
       }
     } catch (err) {
       console.log(err);
     }
   };
-  // const handleGoogle = async (e) => {
-  //   e.preventDefault();
-    // const res = await axios.get(`${localhost}/auth/google`, {
-    //   withCredentials: "include",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //     "Access-Control-Allow-Credentials": true
-    //   },
-    // });
-    // console.log(res);
-    // try {
-    //   const res = await axios.get(`${localhost}/auth/google`, {
-    //     withCredentials: "include",
-    //   });
-    //   setResponse(res.data);
-    //   console.log(res);
-    // } catch (err) {
-    //   console.log(err);
-    // }
-  // };
+
   const handleGoogle = async (e) => {
     e.preventDefault();
     window.location.href = `${localhost}/auth/google`;
   };
-  
+  // --------------------------------------------------------------------------//
   return (
     <div className="h-dvh w-dvw flex justify-center items-center ">
       {/* Background div image */}
@@ -248,7 +219,6 @@ function Signpage(props) {
                     onClick={handleGoogle}
                     className="flex flex-row justify-center items-center gap-3 bg-white h-9 w-full rounded-md text-center text-sm border border-[#218225]"
                   >
-                  
                     {/* google icon */}
                     <img src="./images/google.svg" alt="" className="h-5" />
                     <div className="text-[#218225] font-['Open_Sans']">

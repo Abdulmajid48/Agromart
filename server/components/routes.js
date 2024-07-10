@@ -1,6 +1,8 @@
 import passport from "./authroute.js";
 import { register } from "./authroute.js";
+import env from "dotenv";
 
+env.config();
 const routes = (app) => {
   // Rerender login page
   app.get("/login", (req, res) => {
@@ -20,7 +22,7 @@ const routes = (app) => {
   // products page
   app.get("/products", (req, res) => {
     if (req.isAuthenticated()) {
-      res.send("user is certified");
+      res.json({ isLoggedIn: "user is certified", user: req.user });
     } else {
       res.redirect("/login");
     }
@@ -38,7 +40,8 @@ const routes = (app) => {
   app.get(
     "/auth/google/products",
     passport.authenticate("google", {
-      successRedirect: "/products",
+      successRedirect:
+        `${process.env.FRONTEND}/products` || "http://localhost:5173/products", //"/products
       failureRedirect: "/login",
     })
   );

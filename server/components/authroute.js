@@ -49,7 +49,7 @@ passport.use(
   })
 );
 
-// REGISTER NEEW USERS
+// REGISTER NEW USERS
 const register = async (req, res) => {
   const { fullname, email, password } = req.body;
   // check if email already exist
@@ -93,7 +93,9 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/google/products",
+      callbackURL:
+        `${process.env.FRONTEND}/auth/google/products` ||
+        "http://localhost:3000/auth/google/products",
     },
     async (accessToken, refreshToken, profile, cb) => {
       try {

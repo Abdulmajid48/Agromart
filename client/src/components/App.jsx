@@ -15,12 +15,39 @@ import AboutUs from "../pages/AboutUs";
 import Products from "../pages/Products";
 import ProtectedRoute from "./ProtectedRoute";
 
-
-
-// createContext 
+// createContext
 export const ResponsiveWidth = createContext();
 
 function App() {
+  // Assuming this code is in a Vite project
+  const localhost = import.meta.env.VITE_BACKEND || "http://localhost:3000";
+
+  console.log(localhost); // This should log the value from .env file or fallback to "http://localhost:3000"
+
+  const [isAuthenticated, setIsAuthenticated] = useState({
+    login: null,
+    user: null,
+  });
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await axios.get(`${localhost}/products`, {
+          withCredentials: "include",
+        });
+        const { isLoggedIn, user } = res.data;
+        setIsAuthenticated({
+          login: isLoggedIn,
+          user: isLoggedIn ? user : null,
+        });
+      } catch (error) {
+        console.error(error);
+        setIsAuthenticated({ login: false, user: null });
+      }
+    };
+    checkAuth();
+  }, [localhost]);
+
   // ------------------Responsive Width --------------------------//
   const [matches, setMatches] = useState(
     window.matchMedia("(min-width: 768px)").matches
@@ -31,7 +58,7 @@ function App() {
       .matchMedia("(min-width: 768px)")
       .addEventListener("change", (e) => setMatches(e.matches));
   }, []);
-  const localhost = "http://localhost:3000";
+
   // ---------------------------------------------------//
   return (
     <ResponsiveWidth.Provider value={{ matches, axios, localhost }}>
@@ -43,8 +70,8 @@ function App() {
             <Route
               path="products"
               element={
-                <ProtectedRoute>
-                  <Products />
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <Products isAuthenticated={isAuthenticated} />
                 </ProtectedRoute>
               }
             />
@@ -56,5 +83,4 @@ function App() {
     </ResponsiveWidth.Provider>
   );
 }
-
 export default App;

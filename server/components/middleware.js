@@ -2,13 +2,16 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import session from "express-session";
 import passport from "passport";
+import env from "dotenv";
+
+env.config();
 
 // MIDDLEWARE
 const middleware = (app) => {
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(
     cors({
-      origin: ["http://localhost:5173", "https://agromart.vercel.app/"],
+      origin: ["http://localhost:5173", process.env.FRONTEND],
       credentials: true,
     })
   );
