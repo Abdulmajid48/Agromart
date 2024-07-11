@@ -3,8 +3,19 @@ import cors from "cors";
 import session from "express-session";
 import passport from "passport";
 import env from "dotenv";
-import { MemoryStore } from "express-session";
+import RedisStore from "connect-redis";
+import session from "express-session";
+import { createClient } from "redis";
 
+// Initialize client.
+let redisClient = createClient();
+redisClient.connect().catch(console.error);
+
+// Initialize store.
+let redisStore = new RedisStore({
+  client: redisClient,
+  prefix: "myapp:",
+});
 
 env.config();
 
@@ -24,9 +35,7 @@ const middleware = (app) => {
       resave: false,
       saveUninitialized: true,
       cookie: { maxAge: 86400000 },
-      store: new MemoryStore({
-        checkPeriod: 86400000, // prune expired entries every 24h
-      }),
+      store: redisStore,
     })
   );
   app.use(passport.initialize());
