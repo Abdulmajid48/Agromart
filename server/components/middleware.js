@@ -1,9 +1,9 @@
 import bodyParser from "body-parser";
 import cors from "cors";
-import session from "express-session";
+// import session from "express-session";
 import passport from "passport";
 import env from "dotenv";
-import { MemoryStore } from "cookie-session";
+import session from "cookie-session";
 
 env.config();
 
