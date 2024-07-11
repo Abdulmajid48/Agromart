@@ -4,7 +4,6 @@ import session from "express-session";
 import passport from "passport";
 import env from "dotenv";
 import RedisStore from "connect-redis";
-import session from "express-session";
 import { createClient } from "redis";
 
 // Initialize client.
