@@ -56,13 +56,7 @@ function Signpage(props) {
           password,
         },
         {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-          data: {
-            key: "value",
-          },
+          withCredentials: "include",
         }
       );
       const { isLoggedIn } = res.data;
@@ -87,13 +81,7 @@ function Signpage(props) {
           password,
         },
         {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-          data: {
-            key: "value",
-          },
+          withCredentials: "include",
         }
       );
       const { isLoggedIn } = res.data;
