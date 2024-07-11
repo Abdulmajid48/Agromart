@@ -17,12 +17,11 @@ import ProtectedRoute from "./ProtectedRoute";
 
 // createContext
 export const ResponsiveWidth = createContext();
-
+axios.defaults.withCredentials = true;
 function App() {
-  // Assuming this code is in a Vite project
-  const localhost = import.meta.env.VITE_BACKEND || "http://localhost:3000";
+  const localhost = "https://agromart-uyly.onrender.com";
 
-  console.log(localhost); // This should log the value from .env file or fallback to "http://localhost:3000"
+  console.log(localhost);
 
   const [isAuthenticated, setIsAuthenticated] = useState({
     login: null,
@@ -40,6 +39,7 @@ function App() {
           login: isLoggedIn,
           user: isLoggedIn ? user : null,
         });
+        console.log(`${localhost}/products`);
       } catch (error) {
         console.error(error);
         setIsAuthenticated({ login: false, user: null });
@@ -61,7 +61,7 @@ function App() {
 
   // ---------------------------------------------------//
   return (
-    <ResponsiveWidth.Provider value={{ matches, axios, localhost }}>
+    <ResponsiveWidth.Provider value={{ matches, localhost }}>
       <div className="App">
         <Routes>
           <Route path="/" element={<SharedLayout />}>

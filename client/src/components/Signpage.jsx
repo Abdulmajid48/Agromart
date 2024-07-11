@@ -9,11 +9,12 @@ import { ResponsiveWidth } from "./App";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
 
 function Signpage(props) {
   const { display, sign, btn, account, google } = props;
   // import axios and localhost
-  const { axios, localhost } = useContext(ResponsiveWidth);
+  const { localhost } = useContext(ResponsiveWidth);
   // navigate to another page
   const navigate = useNavigate();
   //-------------------------------------//
@@ -54,7 +55,15 @@ function Signpage(props) {
           email,
           password,
         },
-        { withCredentials: "include" }
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: {
+            key: "value",
+          },
+        }
       );
       const { isLoggedIn } = res.data;
       if (isLoggedIn) {
@@ -77,7 +86,15 @@ function Signpage(props) {
           username,
           password,
         },
-        { withCredentials: "include" }
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: {
+            key: "value",
+          },
+        }
       );
       const { isLoggedIn } = res.data;
       if (isLoggedIn) {

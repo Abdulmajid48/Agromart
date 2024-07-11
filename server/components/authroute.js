@@ -93,9 +93,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL:
-        `${process.env.FRONTEND}/auth/google/products` ||
-        "http://localhost:3000/auth/google/products",
+      callbackURL: "http://localhost:3000/auth/google/products",
     },
     async (accessToken, refreshToken, profile, cb) => {
       try {

@@ -40,8 +40,7 @@ const routes = (app) => {
   app.get(
     "/auth/google/products",
     passport.authenticate("google", {
-      successRedirect:
-        `${process.env.FRONTEND}/products` || "http://localhost:5173/products", //"/products
+      successRedirect: "https://agromart-delta.vercel.app/products", //"/products
       failureRedirect: "/login",
     })
   );
