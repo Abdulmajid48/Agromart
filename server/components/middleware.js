@@ -3,7 +3,7 @@ import cors from "cors";
 import session from "express-session";
 import passport from "passport";
 import env from "dotenv";
-import { MemoryStore } from "express-session";
+import { MemoryStore } from "cookie-session";
 
 env.config();
 
@@ -25,9 +25,7 @@ const middleware = (app) => {
       cookie: {
         maxAge: 1000 * 60 * 60, // 1 hour cookie
       },
-      store: new MemoryStore({
-        checkPeriod: 86400000, // prune expired entries every 24h
-      }),
+      store: new RedisStore(),
     })
   );
   app.use(passport.initialize());
