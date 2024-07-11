@@ -1,9 +1,9 @@
 import bodyParser from "body-parser";
 import cors from "cors";
-// import session from "express-session";
+import session from "express-session";
 import passport from "passport";
 import env from "dotenv";
-import session from "cookie-session";
+
 
 env.config();
 
@@ -22,10 +22,10 @@ const middleware = (app) => {
       secret: process.env.SESSION_SECRET,
       resave: false,
       saveUninitialized: true,
-      cookie: {
-        maxAge: 1000 * 60 * 60, // 1 hour cookie
-      },
-      store: new RedisStore(),
+      cookie: { maxAge: 86400000 },
+      store: new MemoryStore({
+        checkPeriod: 86400000, // prune expired entries every 24h
+      }),
     })
   );
   app.use(passport.initialize());
