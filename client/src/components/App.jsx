@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 // React Hooks
 import { createContext, useEffect, useState } from "react";
 // Axios
-// import axios from "axios";
+import axios from "axios";
 // Sign up and Sign In
 import { Signup, Signin } from "../pages/Access";
 // Mother Page for Home Page
@@ -13,7 +13,7 @@ import Home from "../pages/Home";
 // About Us Page
 import AboutUs from "../pages/AboutUs";
 import Products from "../pages/Products";
-// import ProtectedRoute from "./ProtectedRoute";
+import ProtectedRoute from "./ProtectedRoute";
 
 // createContext
 export const ResponsiveWidth = createContext();
@@ -23,30 +23,30 @@ function App() {
 
   console.log(localhost);
 
-  // const [isAuthenticated, setIsAuthenticated] = useState({
-  //   login: null,
-  //   user: null,
-  // });
+  const [isAuthenticated, setIsAuthenticated] = useState({
+    login: null,
+    user: null,
+  });
 
-  // useEffect(() => {
-  //   const checkAuth = async () => {
-  //     try {
-  //       const res = await axios.get(`${localhost}/products`, {
-  //         withCredentials: true,
-  //       });
-  //       const { isLoggedIn, user } = res.data;
-  //       setIsAuthenticated({
-  //         login: isLoggedIn,
-  //         user: isLoggedIn ? user : null,
-  //       });
-  //       console.log(isLoggedIn);
-  //     } catch (error) {
-  //       console.error(error);
-  //       setIsAuthenticated({ login: false, user: null });
-  //     }
-  //   };
-  //   checkAuth();
-  // }, [localhost]);
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await axios.get(`${localhost}/products`, {
+          withCredentials: true,
+        });
+        const { isLoggedIn, user } = res.data;
+        setIsAuthenticated({
+          login: isLoggedIn,
+          user: isLoggedIn ? user : null,
+        });
+        console.log(isLoggedIn);
+      } catch (error) {
+        console.error(error);
+        setIsAuthenticated({ login: false, user: null });
+      }
+    };
+    checkAuth();
+  }, [localhost]);
 
   // ------------------Responsive Width --------------------------//
   const [matches, setMatches] = useState(
@@ -70,9 +70,9 @@ function App() {
             <Route
               path="products"
               element={
-                //<ProtectedRoute isAuthenticated={isAuthenticated}>
-                <Products />
-                //</ProtectedRoute>
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <Products isAuthenticated={isAuthenticated} />
+                </ProtectedRoute>
               }
             />
           </Route>

@@ -1,19 +1,18 @@
-const Products = () => {
+const Products = ({ isAuthenticated }) => {
+  const userName = isAuthenticated?.user?.name;
+  let displayName = "";
 
-  // const userName = isAuthenticated?.user?.name;
-  // let displayName = "";
+  try {
+    // Try to parse the name as JSON
+    const parsedName = JSON.parse(userName);
+    // If the parsing is successful, use the givenName and familyName
+    displayName = `${parsedName.givenName} ${parsedName.familyName}`;
+  } catch (error) {
+    // If parsing fails, use the name directly
+    displayName = userName;
+  }
 
-  // try {
-  //   // Try to parse the name as JSON
-  //   const parsedName = JSON.parse(userName);
-  //   // If the parsing is successful, use the givenName and familyName
-  //   displayName = `${parsedName.givenName} ${parsedName.familyName}`;
-  // } catch (error) {
-  //   // If parsing fails, use the name directly
-  //   displayName = userName;
-  // }
-
-  // console.log(displayName);
+  console.log(displayName);
 
   return <div>Hello MR</div>;
 };

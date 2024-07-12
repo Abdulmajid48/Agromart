@@ -15,8 +15,10 @@ const middleware = (app) => {
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(
     cors({
-      origin:"https://agromart-delta.vercel.app", //frontend
+      origin: "https://agromart-delta.vercel.app", //frontend
       credentials: true,
+      methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
+      allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept",
     })
   );
   app.use(bodyParser.json());
@@ -26,6 +28,9 @@ const middleware = (app) => {
       resave: false,
       saveUninitialized: true,
       cookie: { maxAge: 86400000 },
+      sameSite: "None",
+      secure: true,
+      expires: new Date(Date.now() + 86400000), // 24 hours from now
       store: new MemoryStore({
         checkPeriod: 86400000, // prune expired entries every 24h
       }),
