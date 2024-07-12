@@ -19,7 +19,7 @@ import ProtectedRoute from "./ProtectedRoute";
 export const ResponsiveWidth = createContext();
 axios.defaults.withCredentials = true;
 function App() {
-  const localhost = "https://agromart-uyly.onrender.com";
+  const localhost = "https://agromart-uyly.onrender.com"; //backend
 
   console.log(localhost);
 
@@ -39,7 +39,7 @@ function App() {
           login: isLoggedIn,
           user: isLoggedIn ? user : null,
         });
-        console.log(`${localhost}/products`);
+        console.log(isLoggedIn);
       } catch (error) {
         console.error(error);
         setIsAuthenticated({ login: false, user: null });

@@ -56,7 +56,7 @@ function Signpage(props) {
           password,
         },
         {
-          withCredentials: "include",
+          withCredentials: true,
         }
       );
       const { isLoggedIn } = res.data;
@@ -81,7 +81,7 @@ function Signpage(props) {
           password,
         },
         {
-          withCredentials: "include",
+          withCredentials: true,
         }
       );
       const { isLoggedIn } = res.data;
