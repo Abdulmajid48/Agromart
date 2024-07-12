@@ -17,7 +17,7 @@ import ProtectedRoute from "./ProtectedRoute";
 
 // createContext
 export const ResponsiveWidth = createContext();
-axios.defaults.withCredentials = true;
+
 function App() {
   const localhost = "https://agromart-uyly.onrender.com"; //backend
 

@@ -15,7 +15,7 @@ const middleware = (app) => {
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(
     cors({
-      origin: ["https://agromart-delta.vercel.app", "http://localhost:5173"], //frontend
+      origin: "https://agromart-delta.vercel.app", //frontend
       credentials: true,
     })
   );
