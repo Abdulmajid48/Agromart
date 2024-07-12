@@ -32,7 +32,7 @@ function App() {
     const checkAuth = async () => {
       try {
         const res = await axios.get(`${localhost}/products`, {
-          withCredentials: "include",
+          withCredentials: true,
         });
         const { isLoggedIn, user } = res.data;
         setIsAuthenticated({
