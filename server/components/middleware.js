@@ -18,7 +18,8 @@ const middleware = (app) => {
       origin: "https://agromart-delta.vercel.app", //frontend
       credentials: true,
       methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
-      allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept",
+      allowedHeaders:
+        "Origin, X-Requested-With, Content-Type, Accept, Authorization",
     })
   );
   app.use(bodyParser.json());

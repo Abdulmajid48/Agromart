@@ -90,8 +90,8 @@ function Signpage(props) {
       } else {
         navigate("/signin");
       }
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error.response);
     }
   };
 

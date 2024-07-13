@@ -24,7 +24,7 @@ function App() {
   console.log(localhost);
 
   const [isAuthenticated, setIsAuthenticated] = useState({
-    login: null,
+    isLoggedIn: null,
     user: null,
   });
 
@@ -36,13 +36,13 @@ function App() {
         });
         const { isLoggedIn, user } = res.data;
         setIsAuthenticated({
-          login: isLoggedIn,
+          isLoggedIn: isLoggedIn,
           user: isLoggedIn ? user : null,
         });
         console.log(isLoggedIn);
       } catch (error) {
         console.error(error);
-        setIsAuthenticated({ login: false, user: null });
+        setIsAuthenticated({ isLoggedIn: false, user: null });
       }
     };
     checkAuth();
