@@ -19,9 +19,9 @@ import ProtectedRoute from "./ProtectedRoute";
 export const ResponsiveWidth = createContext();
 
 function App() {
-  const localhost = "https://agromart-uyly.onrender.com"; //backend
+  const url = "https://agromart-uyly.onrender.com"; //backend
 
-  console.log(localhost);
+  console.log(url);
 
   const [isAuthenticated, setIsAuthenticated] = useState({
     isLoggedIn: null,
@@ -31,7 +31,7 @@ function App() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await axios.get(`${localhost}/products`, {
+        const res = await axios.get(`${url}/products`, {
           withCredentials: true,
         });
         const { isLoggedIn, user } = res.data;
@@ -46,7 +46,7 @@ function App() {
       }
     };
     checkAuth();
-  }, [localhost]);
+  }, [url]);
 
   // ------------------Responsive Width --------------------------//
   const [matches, setMatches] = useState(
@@ -61,14 +61,14 @@ function App() {
 
   // ---------------------------------------------------//
   return (
-    <ResponsiveWidth.Provider value={{ matches, localhost }}>
+    <ResponsiveWidth.Provider value={{ matches, url }}>
       <div className="App">
         <Routes>
           <Route path="/" element={<SharedLayout />}>
             <Route index element={<Home />} />
-            <Route path="aboutus" element={<AboutUs />} />
+            <Route path="/aboutus" element={<AboutUs />} />
             <Route
-              path="products"
+              path="/products"
               element={
                 <ProtectedRoute isAuthenticated={isAuthenticated}>
                   <Products isAuthenticated={isAuthenticated} />
@@ -76,8 +76,8 @@ function App() {
               }
             />
           </Route>
-          <Route path="signup" element={<Signup />} />
-          <Route path="signin" element={<Signin />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/signin" element={<Signin />} />
         </Routes>
       </div>
     </ResponsiveWidth.Provider>

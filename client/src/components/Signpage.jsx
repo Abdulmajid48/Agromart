@@ -14,7 +14,7 @@ import axios from "axios";
 function Signpage(props) {
   const { display, sign, btn, account, google } = props;
   // import axios and localhost
-  const { localhost } = useContext(ResponsiveWidth);
+  const { url } = useContext(ResponsiveWidth);
   // navigate to another page
   const navigate = useNavigate();
   //-------------------------------------//
@@ -49,7 +49,7 @@ function Signpage(props) {
     const { fullname, email, password } = formData;
     try {
       const res = await axios.post(
-        `${localhost}/register`,
+        `${url}/register`,
         {
           fullname,
           email,
@@ -75,7 +75,7 @@ function Signpage(props) {
     const { email: username, password } = formData;
     try {
       const res = await axios.post(
-        `${localhost}/login`,
+        `${url}/login`,
         {
           username,
           password,
@@ -97,7 +97,7 @@ function Signpage(props) {
 
   const handleGoogle = async (e) => {
     e.preventDefault();
-    window.location.href = `${localhost}/auth/google`;
+    window.location.href = `${url}/auth/google`;
   };
   // --------------------------------------------------------------------------//
   return (
