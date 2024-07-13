@@ -30,7 +30,7 @@ const middleware = (app) => {
       saveUninitialized: true,
       cookie: { maxAge: 86400000 },
       sameSite: "None",
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
       expires: new Date(Date.now() + 86400000), // 24 hours from now
       store: new MemoryStore({
         checkPeriod: 86400000, // prune expired entries every 24h
