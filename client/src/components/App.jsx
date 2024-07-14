@@ -22,8 +22,8 @@ function App() {
   const url = "https://agromart-uyly.onrender.com"; // backend
 
   const [isAuthenticated, setIsAuthenticated] = useState({
-    isLoggedIn: "",
-    user: "",
+    isLoggedIn: null,
+    user: null,
   });
   const [isLoading, setIsLoading] = useState(true);
 
@@ -35,7 +35,7 @@ function App() {
       const { isLoggedIn, user } = res.data;
       setIsAuthenticated({
         isLoggedIn: isLoggedIn,
-        user: isLoggedIn ? user : null,
+        user: user, // Assuming `user` comes from the server response
       });
     } catch (error) {
       console.error(error);
