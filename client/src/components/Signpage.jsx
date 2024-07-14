@@ -86,7 +86,7 @@ function Signpage(props) {
       const { isLoggedIn } = res.data;
       console.log(isLoggedIn);
       if (isLoggedIn) {
-        navigate("/products");
+        navigate("/testing");
       } else {
         navigate("/signin");
       }
