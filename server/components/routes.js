@@ -2,11 +2,9 @@ import passport from "./authroute.js";
 import { register } from "./authroute.js";
 import env from "dotenv";
 
-
 env.config();
+
 const routes = (app) => {
-
-
   // Rerender login page
   app.get("/login", (req, res) => {
     res.json({ hello: "hello" });
@@ -22,8 +20,9 @@ const routes = (app) => {
     });
   });
 
-  // products page
+  // Products page
   app.get("/products", (req, res) => {
+    console.log("isAuthenticated:", req.isAuthenticated());
     if (req.isAuthenticated()) {
       res.json({ isLoggedIn: "user is certified", user: req.user });
     } else {
@@ -31,7 +30,7 @@ const routes = (app) => {
     }
   });
 
-  // google Auth
+  // Google Auth
   app.get(
     "/auth/google",
     passport.authenticate("google", {
@@ -39,16 +38,16 @@ const routes = (app) => {
     })
   );
 
-  // google auth redirect
+  // Google auth redirect
   app.get(
     "/auth/google/products",
     passport.authenticate("google", {
-      successRedirect: "https://agromart-gamma.vercel.app/products", //"/products
+      successRedirect: "https://agromart-gamma.vercel.app/products", // "/products
       failureRedirect: "/login",
     })
   );
 
-  // register route
+  // Register route
   app.post("/register", register);
 
   // login route
@@ -60,4 +59,5 @@ const routes = (app) => {
     })
   );
 };
+
 export default routes;
