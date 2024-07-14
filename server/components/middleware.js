@@ -4,7 +4,10 @@ import session from "express-session";
 import passport from "passport";
 import env from "dotenv";
 import createMemoryStore from "memorystore";
+import path from "path"
 
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client')));
 // Initialize MemoryStore
 const MemoryStore = createMemoryStore(session);
 
