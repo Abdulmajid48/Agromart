@@ -1,20 +1,18 @@
 // Hooks
-import { useState } from "react";
-import { useContext } from "react";
+import { useState, useContext } from "react";
 // React-router
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 //  createRouter for axios and localhost
 import { ResponsiveWidth } from "./App";
 // Material Icons
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
-import { NavLink } from "react-router-dom";
 import axios from "axios";
 //--------------------------------------------------------------//
 function Signpage(props) {
   const { display, sign, btn, account, google } = props;
   // import axios and localhost
-  const { url, checkAuth} = useContext(ResponsiveWidth);
+  const { url, checkAuth } = useContext(ResponsiveWidth);
   // navigate to another page
   const navigate = useNavigate();
   //-------------------------------------//
@@ -61,7 +59,7 @@ function Signpage(props) {
       );
       const { isLoggedIn } = res.data;
       if (isLoggedIn) {
-        checkAuth()
+        checkAuth();
         navigate("/products");
       } else {
         navigate("/signup");
@@ -87,7 +85,7 @@ function Signpage(props) {
       );
       const { isLoggedIn } = res.data;
       if (isLoggedIn) {
-         checkAuth();
+        checkAuth();
         navigate("/products");
       } else {
         navigate("/signin");
@@ -99,7 +97,7 @@ function Signpage(props) {
 
   const handleGoogle = async (e) => {
     e.preventDefault();
-     checkAuth();
+    checkAuth();
     window.location.href = `${url}/auth/google`;
   };
   // --------------------------------------------------------------------------//

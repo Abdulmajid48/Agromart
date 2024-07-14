@@ -4,7 +4,7 @@ const Products = ({ isAuthenticated }) => {
   const userName = isAuthenticated?.user?.name;
   const [displayName, setDisplayName] = useState("");
 
-  useEffect(() => {
+  const updateName = (userName) => {
     if (userName) {
       try {
         // Try to parse the name as JSON
@@ -19,11 +19,13 @@ const Products = ({ isAuthenticated }) => {
     } else {
       setDisplayName(""); // Reset display name if userName is undefined or null
     }
+  };
+
+  useEffect(() => {
+    updateName(userName);
   }, [userName]);
 
-  console.log(displayName);
-
-  return <div>Hello MR {displayName}</div>;
+  return <div>Hello Mr. {displayName}</div>;
 };
 
 export default Products;

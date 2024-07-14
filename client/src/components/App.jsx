@@ -8,7 +8,7 @@ import axios from "axios";
 import { Signup, Signin } from "../pages/Access";
 // Mother Page for Home Page
 import SharedLayout from "../pages/SharedLayout";
-//  Home page (index)
+// Home page (index)
 import Home from "../pages/Home";
 // About Us Page
 import AboutUs from "../pages/AboutUs";
@@ -21,12 +21,11 @@ export const ResponsiveWidth = createContext();
 function App() {
   const url = "https://agromart-uyly.onrender.com"; //backend
 
-  console.log(url);
-
   const [isAuthenticated, setIsAuthenticated] = useState({
     isLoggedIn: null,
     user: null,
   });
+
   const checkAuth = async () => {
     try {
       const res = await axios.get(`${url}/products`, {
@@ -37,15 +36,15 @@ function App() {
         isLoggedIn: isLoggedIn,
         user: isLoggedIn ? user : null,
       });
-      console.log(isLoggedIn);
     } catch (error) {
       console.error(error);
       setIsAuthenticated({ isLoggedIn: false, user: null });
     }
   };
+
   useEffect(() => {
     checkAuth();
-  }, [url]);
+  }, []);
 
   // ------------------Responsive Width --------------------------//
   const [matches, setMatches] = useState(
@@ -53,21 +52,24 @@ function App() {
   );
 
   useEffect(() => {
-    window
-      .matchMedia("(min-width: 768px)")
-      .addEventListener("change", (e) => setMatches(e.matches));
+    const handler = (e) => setMatches(e.matches);
+    window.matchMedia("(min-width: 768px)").addEventListener("change", handler);
+    return () => {
+      window
+        .matchMedia("(min-width: 768px)")
+        .removeEventListener("change", handler);
+    };
   }, []);
 
-  // ---------------------------------------------------//
   return (
     <ResponsiveWidth.Provider value={{ matches, url, checkAuth }}>
       <div className="App">
         <Routes>
           <Route path="/" element={<SharedLayout />}>
             <Route index element={<Home />} />
-            <Route path="/aboutus" element={<AboutUs />} />
+            <Route path="aboutus" element={<AboutUs />} />
             <Route
-              path="/products"
+              path="products"
               element={
                 <ProtectedRoute isAuthenticated={isAuthenticated}>
                   <Products isAuthenticated={isAuthenticated} />
@@ -75,8 +77,8 @@ function App() {
               }
             />
           </Route>
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/signin" element={<Signin />} />
+          <Route path="signup" element={<Signup />} />
+          <Route path="signin" element={<Signin />} />
         </Routes>
       </div>
     </ResponsiveWidth.Provider>
