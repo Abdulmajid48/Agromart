@@ -78,10 +78,13 @@ function Signpage(props) {
         },
         {
           withCredentials: true,
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
         }
       );
       const { isLoggedIn } = res.data;
-      console.log(isLoggedIn)
+      console.log(isLoggedIn);
       if (isLoggedIn) {
         navigate("/products");
       } else {

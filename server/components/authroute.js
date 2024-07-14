@@ -35,13 +35,13 @@ passport.use(
               return cb(null, user);
               // if password doesnt match
             } else {
-              return cb(null, false, { message: "Incorrect password." });
+              return cb(null, false);
             }
           }
         });
         // if user email doesnt exist
       } else {
-        return cb(null, false, { message: "User not found." });
+        return cb(null, false);
       }
     } catch (error) {
       console.log(error);
