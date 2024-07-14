@@ -5,11 +5,11 @@ const ProtectedRoute = ({ children, isAuthenticated, isLoading }) => {
     return <div>Loading...</div>; // Replace with a proper loading spinner or component if needed
   }
 
-  if (!isAuthenticated?.isLoggedIn) {
-    return <Navigate to="/signin" />;
+  if (isAuthenticated?.isLoggedIn) {
+    return children;
   }
 
-  return children;
+  return <Navigate to="/signin" />;
 };
 
 export default ProtectedRoute;
