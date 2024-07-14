@@ -5,6 +5,14 @@ import session from "express-session";
 import passport from "passport";
 import env from "dotenv";
 import createMemoryStore from "memorystore";
+import path from "path";
+import { fileURLToPath } from "url";
+
+// Convert import.meta.url to __filename
+const __filename = fileURLToPath(import.meta.url);
+
+// Get the directory name of the current module
+const __dirname = path.dirname(__filename);
 
 // Initialize MemoryStore
 const MemoryStore = createMemoryStore(session);
@@ -13,6 +21,8 @@ env.config();
 
 // MIDDLEWARE
 const middleware = (app) => {
+  // Serve static files from the React app
+  app.use(express.static(path.join(__dirname, "client")));
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(
     cors({

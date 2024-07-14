@@ -1,14 +1,13 @@
 import passport from "./authroute.js";
 import { register } from "./authroute.js";
 import env from "dotenv";
+import path from "path";
 
 env.config();
 const routes = (app) => {
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/client/index.html"));
-});
-
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname + "/client/index.html"));
+  });
 
   // Rerender login page
   app.get("/login", (req, res) => {
