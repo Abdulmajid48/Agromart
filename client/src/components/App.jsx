@@ -62,7 +62,7 @@ function App() {
   }, []);
 
   return (
-    <ResponsiveWidth.Provider value={{ matches, url, checkAuth }}>
+    <ResponsiveWidth.Provider value={{ matches, url }}>
       <div className="App">
         <Routes>
           <Route path="/" element={<SharedLayout />}>

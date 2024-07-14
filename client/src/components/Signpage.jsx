@@ -12,7 +12,7 @@ import axios from "axios";
 function Signpage(props) {
   const { display, sign, btn, account, google } = props;
   // import axios and localhost
-  const { url, checkAuth } = useContext(ResponsiveWidth);
+  const { url } = useContext(ResponsiveWidth);
   // navigate to another page
   const navigate = useNavigate();
   //-------------------------------------//
@@ -59,7 +59,6 @@ function Signpage(props) {
       );
       const { isLoggedIn } = res.data;
       if (isLoggedIn) {
-        checkAuth();
         navigate("/products");
       } else {
         navigate("/signup");
@@ -85,7 +84,6 @@ function Signpage(props) {
       );
       const { isLoggedIn } = res.data;
       if (isLoggedIn) {
-        checkAuth();
         navigate("/products");
       } else {
         navigate("/signin");
@@ -97,7 +95,6 @@ function Signpage(props) {
 
   const handleGoogle = async (e) => {
     e.preventDefault();
-    checkAuth();
     window.location.href = `${url}/auth/google`;
   };
   // --------------------------------------------------------------------------//
