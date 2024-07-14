@@ -42,8 +42,7 @@ function Signpage(props) {
 
   // ---------------------------------------------------------------------------------------//
   // Handle Submit for Signup ---- Register
-  const handleSubmitRegister = async (e) => {
-    e.preventDefault();
+  const handleSubmitRegister = async () => {
     const { fullname, email, password } = formData;
     try {
       const res = await axios.post(
@@ -68,8 +67,7 @@ function Signpage(props) {
     }
   };
   // Handle Submit for Signin ---- Login
-  const handleSubmitLogin = async (e) => {
-    e.preventDefault();
+  const handleSubmitLogin = async () => {
     const { email: username, password } = formData;
     try {
       const res = await axios.post(
@@ -83,10 +81,9 @@ function Signpage(props) {
         }
       );
       const { isLoggedIn } = res.data;
-      console.log(res.data);
       console.log(isLoggedIn)
       if (isLoggedIn) {
-        navigate("/testing");
+        navigate("/products");
       } else {
         navigate("/signin");
       }
@@ -95,8 +92,7 @@ function Signpage(props) {
     }
   };
 
-  const handleGoogle = async (e) => {
-    e.preventDefault();
+  const handleGoogle = async () => {
     window.location.href = `${url}/auth/google`;
   };
   // --------------------------------------------------------------------------//

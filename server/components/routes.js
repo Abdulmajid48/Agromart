@@ -43,7 +43,7 @@ const routes = (app) => {
   app.get(
     "/auth/google/products",
     passport.authenticate("google", {
-      successRedirect: "https://agromart-gamma.vercel.app/testing", //"/products
+      successRedirect: "https://agromart-gamma.vercel.app/products", //"/products
       failureRedirect: "/login",
     })
   );
