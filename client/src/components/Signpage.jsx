@@ -10,11 +10,11 @@ import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
-
+//--------------------------------------------------------------//
 function Signpage(props) {
   const { display, sign, btn, account, google } = props;
   // import axios and localhost
-  const { url } = useContext(ResponsiveWidth);
+  const { url, checkAuth } = useContext(ResponsiveWidth);
   // navigate to another page
   const navigate = useNavigate();
   //-------------------------------------//
@@ -61,6 +61,7 @@ function Signpage(props) {
       );
       const { isLoggedIn } = res.data;
       if (isLoggedIn) {
+        checkAuth();
         navigate("/products");
       } else {
         navigate("/signup");
@@ -86,6 +87,7 @@ function Signpage(props) {
       );
       const { isLoggedIn } = res.data;
       if (isLoggedIn) {
+        checkAuth();
         navigate("/products");
       } else {
         navigate("/signin");
@@ -97,7 +99,8 @@ function Signpage(props) {
 
   const handleGoogle = async (e) => {
     e.preventDefault();
-    window.location.href = `${url}/auth/google`;
+    checkAuth();
+    //window.location.href = `${url}/auth/google`;
   };
   // --------------------------------------------------------------------------//
   return (
@@ -219,18 +222,20 @@ function Signpage(props) {
                   <div className="flex flex-grow w-7 border border-b-[#E1E2E5] h-0 "></div>
                 </div>
                 {/* Sign up/in with google */}
-                <div className="">
-                  <button
-                    onClick={handleGoogle}
-                    className="flex flex-row justify-center items-center gap-3 bg-white h-9 w-full rounded-md text-center text-sm border border-[#218225]"
-                  >
-                    {/* google icon */}
-                    <img src="./images/google.svg" alt="" className="h-5" />
-                    <div className="text-[#218225] font-['Open_Sans']">
-                      {google}
-                    </div>
-                  </button>
-                </div>
+                <NavLink to={`${url}/auth/google`}>
+                  <div className="">
+                    <button
+                      onClick={handleGoogle}
+                      className="flex flex-row justify-center items-center gap-3 bg-white h-9 w-full rounded-md text-center text-sm border border-[#218225]"
+                    >
+                      {/* google icon */}
+                      <img src="./images/google.svg" alt="" className="h-5" />
+                      <div className="text-[#218225] font-['Open_Sans']">
+                        {google}
+                      </div>
+                    </button>
+                  </div>
+                </NavLink>
                 {/* Redirect to sign in/up */}
                 <div className="text-center text-xs mb-10 font-['poppins']">
                   {account}

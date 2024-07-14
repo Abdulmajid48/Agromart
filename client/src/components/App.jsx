@@ -27,24 +27,23 @@ function App() {
     isLoggedIn: null,
     user: null,
   });
-
+  const checkAuth = async () => {
+    try {
+      const res = await axios.get(`${url}/products`, {
+        withCredentials: true,
+      });
+      const { isLoggedIn, user } = res.data;
+      setIsAuthenticated({
+        isLoggedIn: isLoggedIn,
+        user: isLoggedIn ? user : null,
+      });
+      console.log(isLoggedIn);
+    } catch (error) {
+      console.error(error);
+      setIsAuthenticated({ isLoggedIn: false, user: null });
+    }
+  };
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await axios.get(`${url}/products`, {
-          withCredentials: true,
-        });
-        const { isLoggedIn, user } = res.data;
-        setIsAuthenticated({
-          isLoggedIn: isLoggedIn,
-          user: isLoggedIn ? user : null,
-        });
-        console.log(isLoggedIn);
-      } catch (error) {
-        console.error(error);
-        setIsAuthenticated({ isLoggedIn: false, user: null });
-      }
-    };
     checkAuth();
   }, [url]);
 
@@ -61,7 +60,7 @@ function App() {
 
   // ---------------------------------------------------//
   return (
-    <ResponsiveWidth.Provider value={{ matches, url }}>
+    <ResponsiveWidth.Provider value={{ matches, url, checkAuth }}>
       <div className="App">
         <Routes>
           <Route path="/" element={<SharedLayout />}>
