@@ -9,7 +9,7 @@ const routes = (app) => {
 
   // Rerender login page
   app.get("/login", (req, res) => {
-    res.send("h");
+    res.json({ hello: "hello" });
   });
 
   // Logout page
