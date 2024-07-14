@@ -84,7 +84,7 @@ function Signpage(props) {
         }
       );
       const { isLoggedIn } = res.data;
-      console.log(isLoggedIn);
+      console.log(res.data);
       if (isLoggedIn) {
         navigate("/testing");
       } else {
