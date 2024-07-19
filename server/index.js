@@ -19,8 +19,6 @@
 //   console.log(`listening to port ${port}`);
 // });
 
-
-
 import express from "express";
 import bodyParser from "body-parser";
 import pg from "pg";
@@ -33,7 +31,7 @@ import bcrypt from "bcrypt";
 import cors from "cors";
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const saltRounds = 10;
 import createMemoryStore from "memorystore";
 
@@ -83,6 +81,7 @@ const db = new pg.Client({
 
 db.connect();
 
+
 app.get("/login", (req, res) => {
   res.json({ hello: "hello" });
 });
@@ -126,37 +125,44 @@ app.post(
     failureRedirect: "/login",
   })
 );
+
 passport.use(
   "local",
-  new Strategy(async function verify(username, password, cb) {
-    try {
-      const response = await db.query(
-        "SELECT * FROM users WHERE email = ($1)",
-        [username]
-      );
+  new Strategy(
+    {
+      usernameField: "email",
+      passwordField: "password",
+    },
+    async function verify(username, password, cb) {
+      try {
+        const response = await db.query(
+          "SELECT * FROM users WHERE email = ($1)",
+          [username]
+        );
 
-      if (response.rows.length > 0) {
-        const user = response.rows[0];
-        const storedpassword = user.password;
-        bcrypt.compare(password, storedpassword, (err, result) => {
-          if (err) {
-            console.error(err);
-            return cb(err);
-          } else {
-            if (result) {
-              return cb(null, user);
+        if (response.rows.length > 0) {
+          const user = response.rows[0];
+          const storedpassword = user.password;
+          bcrypt.compare(password, storedpassword, (err, result) => {
+            if (err) {
+              console.error(err);
+              return cb(err);
             } else {
-              return cb(null, false, { message: "Incorrect password." });
+              if (result) {
+                return cb(null, user);
+              } else {
+                return cb(null, false, { message: "Incorrect password." });
+              }
             }
-          }
-        });
-      } else {
-        return cb(null, false, { message: "User not found." });
+          });
+        } else {
+          return cb(null, false, { message: "User not found." });
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
-  })
+  )
 );
 // Register new User
 app.post("/register", async (req, res) => {
