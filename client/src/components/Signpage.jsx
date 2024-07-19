@@ -79,6 +79,9 @@ function Signpage(props) {
     const params = new URLSearchParams();
     params.append("username", username);
     params.append("password", password);
+    // Debugging logs
+    console.log("Username:", username);
+    console.log("Password:", password);
     try {
       const res = await axios.post(
         `${url}/login`,
