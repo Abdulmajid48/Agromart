@@ -81,7 +81,6 @@ const db = new pg.Client({
 
 db.connect();
 
-
 app.get("/login", (req, res) => {
   res.json({ hello: "hello" });
 });
@@ -128,41 +127,35 @@ app.post(
 
 passport.use(
   "local",
-  new Strategy(
-    {
-      usernameField: "username",
-      passwordField: "password",
-    },
-    async function verify(username, password, cb) {
-      try {
-        const response = await db.query(
-          "SELECT * FROM users WHERE email = ($1)",
-          [username]
-        );
+  new Strategy(async function verify(username, password, cb) {
+    try {
+      const response = await db.query(
+        "SELECT * FROM users WHERE email = ($1)",
+        [username]
+      );
 
-        if (response.rows.length > 0) {
-          const user = response.rows[0];
-          const storedpassword = user.password;
-          bcrypt.compare(password, storedpassword, (err, result) => {
-            if (err) {
-              console.error(err);
-              return cb(err);
+      if (response.rows.length > 0) {
+        const user = response.rows[0];
+        const storedpassword = user.password;
+        bcrypt.compare(password, storedpassword, (err, result) => {
+          if (err) {
+            console.error(err);
+            return cb(err);
+          } else {
+            if (result) {
+              return cb(null, user);
             } else {
-              if (result) {
-                return cb(null, user);
-              } else {
-                return cb(null, false, { message: "Incorrect password." });
-              }
+              return cb(null, false, { message: "Incorrect password." });
             }
-          });
-        } else {
-          return cb(null, false, { message: "User not found." });
-        }
-      } catch (error) {
-        console.log(error);
+          }
+        });
+      } else {
+        return cb(null, false, { message: "User not found." });
       }
+    } catch (error) {
+      console.log(error);
     }
-  )
+  })
 );
 // Register new User
 app.post("/register", async (req, res) => {
