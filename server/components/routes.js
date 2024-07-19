@@ -53,10 +53,19 @@ const routes = (app) => {
   // login route
   app.post(
     "/login",
-    passport.authenticate("local", {
-      successRedirect: "/products",
-      failureRedirect: "/login",
-    })
+    passport.authenticate(
+      "local",
+      (req, res, next) => {
+        // Log the received username and password
+        console.log("Received Username:", req.body.username);
+        console.log("Received Password:", req.body.password);
+        next();
+      },
+      {
+        successRedirect: "/products",
+        failureRedirect: "/login",
+      }
+    )
   );
 };
 
