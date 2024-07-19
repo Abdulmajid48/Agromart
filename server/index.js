@@ -130,7 +130,7 @@ passport.use(
   "local",
   new Strategy(
     {
-      usernameField: "email",
+      usernameField: "username",
       passwordField: "password",
     },
     async function verify(username, password, cb) {
