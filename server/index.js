@@ -57,9 +57,13 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 86400000 },
-    sameSite: "None",
-    secure: process.env.NODE_ENV === "production",
+    cookie: {
+      maxAge: 86400000,
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+    },
+
     expires: new Date(Date.now() + 86400000), // 24 hours from now
     store: new MemoryStore({
       checkPeriod: 86400000, // prune expired entries every 24h
@@ -233,9 +237,9 @@ passport.serializeUser((user, cb) => {
 });
 
 passport.deserializeUser((user, cb) => {
-   process.nextTick(function () {
-     return cb(null, user);
-   });
+  process.nextTick(function () {
+    return cb(null, user);
+  });
 });
 
 app.listen(port, () => {
