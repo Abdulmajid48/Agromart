@@ -227,11 +227,15 @@ passport.use(
 );
 // Serialize and deSerialize users
 passport.serializeUser((user, cb) => {
-  cb(null, user);
+  process.nextTick(function () {
+    cb(null, { id: user.id, username: user.email });
+  });
 });
 
 passport.deserializeUser((user, cb) => {
-  cb(null, user);
+   process.nextTick(function () {
+     return cb(null, user);
+   });
 });
 
 app.listen(port, () => {
