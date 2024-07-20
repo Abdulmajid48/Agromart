@@ -44,7 +44,7 @@ env.config();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: "https://agromart.gamma.vercel.app",
+    origin: "https://agromart-gamma.vercel.app",
     credentials: true,
     methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
     allowedHeaders:
