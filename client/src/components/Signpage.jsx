@@ -41,7 +41,7 @@ function Signpage(props) {
   }
 
   const config = {
-    withCredentials: "include",
+    withCredentials: true,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
@@ -76,9 +76,9 @@ function Signpage(props) {
   // Handle Submit for Signin ---- Login
   const handleSubmitLogin = async () => {
     const { email: username, password } = formData;
-    // const params = new URLSearchParams();
-    // params.append("username", username);
-    // params.append("password", password);
+    const params = new URLSearchParams();
+    params.append("username", username);
+    params.append("password", password);
     // Debugging logs
     console.log("Username:", username);
     console.log("Password:", password);
@@ -89,7 +89,7 @@ function Signpage(props) {
           username,
           password,
         },
-        { ...config }
+        { params, ...config }
       );
       const { isLoggedIn } = res.data;
       console.log(res.data);
