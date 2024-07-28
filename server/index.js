@@ -101,7 +101,7 @@ app.get("/logout", (req, res, next) => {
 app.get("/products", (req, res) => {
   console.log("isAuthenticated:", req.isAuthenticated());
   if (req.isAuthenticated()) {
-    res.json({ isLoggedIn: "user is certified", user: req.user });
+    res.json({ isLoggedIn: "user is certified", user: req.session.user });
   } else {
     res.redirect("/login");
   }
@@ -131,7 +131,7 @@ app.post(
 
 passport.use(
   "local",
-  new Strategy(async function verify(username, password, done) {
+  new Strategy(async (username, password, done) => {
     try {
       const response = await db.query(
         "SELECT * FROM users WHERE email = ($1)",
