@@ -41,7 +41,7 @@ const MemoryStore = createMemoryStore(session);
 env.config();
 
 // MIDDLEWARE
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 app.use(
   cors({
     origin: "https://agromart-gamma.vercel.app",
@@ -61,7 +61,7 @@ app.use(
       maxAge: 86400000,
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: true, //process.env.NODE_ENV === "production",
     },
 
     expires: new Date(Date.now() + 86400000), // 24 hours from now
@@ -101,7 +101,7 @@ app.get("/logout", (req, res, next) => {
 app.get("/products", (req, res) => {
   console.log("isAuthenticated:", req.isAuthenticated());
   if (req.isAuthenticated()) {
-    res.json({ isLoggedIn: "user is certified", user: req.session.user });
+    res.json({ isLoggedIn: "user is certified", user: req.user });
   } else {
     res.redirect("/login");
   }
