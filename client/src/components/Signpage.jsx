@@ -43,7 +43,7 @@ function Signpage(props) {
   const config = {
     withCredentials: true,
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Type": "application/json",
     },
     responseType: "json",
   };
