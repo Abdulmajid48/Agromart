@@ -41,7 +41,7 @@ const MemoryStore = createMemoryStore(session);
 env.config();
 
 // MIDDLEWARE
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
   cors({
     origin: "https://agromart-gamma.vercel.app",
