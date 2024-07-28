@@ -70,8 +70,8 @@ app.use(
     }),
   })
 );
-app.use(passport.initialize());
 app.use(passport.session());
+app.use(passport.initialize());
 
 // POSTGRESQL DATABASE
 const db = new pg.Client({
@@ -131,7 +131,7 @@ app.post(
 
 passport.use(
   "local",
-  new Strategy(async function verify(username, password, cb) {
+  new Strategy(async function verify(username, password, done) {
     try {
       const response = await db.query(
         "SELECT * FROM users WHERE email = ($1)",
@@ -144,17 +144,17 @@ passport.use(
         bcrypt.compare(password, storedpassword, (err, result) => {
           if (err) {
             console.error(err);
-            return cb(err);
+            return done(err);
           } else {
             if (result) {
-              return cb(null, user);
+              return done(null, user);
             } else {
-              return cb(null, false, { message: "Incorrect password." });
+              return done(null, false, { message: "Incorrect password." });
             }
           }
         });
       } else {
-        return cb(null, false, { message: "User not found." });
+        return done(null, false, { message: "User not found." });
       }
     } catch (error) {
       console.log(error);
@@ -204,7 +204,7 @@ passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "https://agromart-uyly.onrender.com/auth/google/products",
     },
-    async (accessToken, refreshToken, profile, cb) => {
+    async (accessToken, refreshToken, profile, done) => {
       try {
         // Check if email already exist
         console.log(profile);
@@ -217,31 +217,26 @@ passport.use(
             "INSERT INTO users (name, email, password) VALUES ($1, $2, $3)",
             [profile.name, profile.email, "google"]
           );
-          return cb(null, newUser.rows[0]);
+          return done(null, newUser.rows[0]);
           // if email exist, return user
         } else {
-          return cb(null, result.rows[0]);
+          return done(null, result.rows[0]);
         }
         // handle error
       } catch (err) {
-        return cb(err);
+        return done(err);
       }
     }
   )
 );
 // Serialize and deSerialize users
-passport.serializeUser((user, cb) => {
-  process.nextTick(function () {
-    cb(null, { id: user.id, username: user.email });
-  });
+passport.serializeUser((user, done) => {
+  done(null, user);
 });
 
-passport.deserializeUser((user, cb) => {
-  process.nextTick(function () {
-    return cb(null, user);
-  });
+passport.deserializeUser((user, done) => {
+  return done(null, user);
 });
-
 app.listen(port, () => {
   console.log(`listening to port ${port}`);
 });
