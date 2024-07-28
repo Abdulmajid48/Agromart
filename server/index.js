@@ -51,7 +51,7 @@ app.use(
       "Origin, X-Requested-With, Content-Type, Accept, Authorization",
   })
 );
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
