@@ -121,13 +121,26 @@ app.get(
     failureRedirect: "/login",
   })
 );
-app.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: "/products",
-    failureRedirect: "/login",
-  })
-);
+
+app.post("/login", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) return next(err);
+    if (!user) return res.status(400).json({ message: info.message });
+    req.logIn(user, (err) => {
+      if (err) return next(err);
+      console.log("isAuthenticated:", req.isAuthenticated());
+      return res.json({ isLoggedIn: true, user });
+    });
+  })(req, res, next);
+});
+
+// app.post(
+//   "/login",
+//   passport.authenticate("local", {
+//     successRedirect: "/products",
+//     failureRedirect: "/login",
+//   })
+// );
 
 passport.use(
   "local",
