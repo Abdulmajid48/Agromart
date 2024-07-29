@@ -131,35 +131,38 @@ app.post(
 
 passport.use(
   "local",
-  new Strategy(async (username, password, done) => {
-    try {
-      const response = await db.query(
-        "SELECT * FROM users WHERE email = ($1)",
-        [username]
-      );
+  new Strategy(
+    { usernameField: "email", passwordField: "password" },
+    async (email, password, done) => {
+      try {
+        const response = await db.query(
+          "SELECT * FROM users WHERE email = ($1)",
+          [email]
+        );
 
-      if (response.rows.length > 0) {
-        const user = response.rows[0];
-        const storedpassword = user.password;
-        bcrypt.compare(password, storedpassword, (err, result) => {
-          if (err) {
-            console.error(err);
-            return done(err);
-          } else {
-            if (result) {
-              return done(null, user);
+        if (response.rows.length > 0) {
+          const user = response.rows[0];
+          const storedpassword = user.password;
+          bcrypt.compare(password, storedpassword, (err, result) => {
+            if (err) {
+              console.error(err);
+              return done(err);
             } else {
-              return done(null, false, { message: "Incorrect password." });
+              if (result) {
+                return done(null, user);
+              } else {
+                return done(null, false, { message: "Incorrect password." });
+              }
             }
-          }
-        });
-      } else {
-        return done(null, false, { message: "User not found." });
+          });
+        } else {
+          return done(null, false, { message: "User not found." });
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
-  })
+  )
 );
 // Register new User
 app.post("/register", async (req, res) => {

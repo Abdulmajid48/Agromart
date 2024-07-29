@@ -75,21 +75,21 @@ function Signpage(props) {
   };
   // Handle Submit for Signin ---- Login
   const handleSubmitLogin = async () => {
-    const { email: username, password } = formData;
-    const params = new URLSearchParams();
-    params.append("username", username);
-    params.append("password", password);
+    const {email, password } = formData;
+    // const params = new URLSearchParams();
+    // params.append("username", username);
+    // params.append("password", password);
     // Debugging logs
-    console.log("Username:", username);
+    console.log("Username:", email);
     console.log("Password:", password);
     try {
       const res = await axios.post(
         `${url}/login`,
         {
-          username,
+          email,
           password,
         },
-        { params, ...config }
+        { ...config }
       );
       const { isLoggedIn } = res.data;
       console.log(res.data);
