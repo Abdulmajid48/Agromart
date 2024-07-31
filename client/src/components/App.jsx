@@ -14,7 +14,6 @@ import Home from "../pages/Home";
 import AboutUs from "../pages/AboutUs";
 import Products from "../pages/Products";
 import ProtectedRoute from "./ProtectedRoute";
-import Testing from "../pages/testing";
 
 // createContext
 export const ResponsiveWidth = createContext();
@@ -86,7 +85,6 @@ function App() {
           </Route>
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
-          <Route path="/testing" element={<Testing />} />
         </Routes>
       </div>
     </ResponsiveWidth.Provider>
