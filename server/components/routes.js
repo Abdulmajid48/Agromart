@@ -83,9 +83,30 @@ router.post("/register", async (req, res) => {
 });
 
 // Login Users
-router.post("/login", passport.authenticate("local"), (req, res) => {
-  if (!req.user) return res.json({ msg: "error" });
-  res.redirect(`/products`);
+router.post("/login", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      // Authentication failed
+      return res.status(401).json({ msg: info.message || "Login failed" });
+    }
+    req.login(user, (err) => {
+      if (err) {
+        return next(err);
+      }
+      // Authentication successful
+      return res.json({
+        msg: info.message || "Login successful",
+        redirect: "/products",
+      });
+    });
+  })(req, res, next);
 });
+// router.post("/login", passport.authenticate("local"), (req, res) => {
+//   if (!req.user) return res.json({ msg: "error" });
+//   res.redirect(`/products`);
+// });
 
 export default router;
