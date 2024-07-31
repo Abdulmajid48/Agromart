@@ -97,7 +97,7 @@ router.post("/login", (req, res, next) => {
         return next(err);
       }
       // Authentication successful
-      return res.redirect("/products")
+      return res.json({ isLoggedIn: "user is certified", user: req.user.name });
     });
   })(req, res, next); // Don't forget to invoke the middleware
 });
