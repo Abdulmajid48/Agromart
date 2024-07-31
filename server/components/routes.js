@@ -70,6 +70,7 @@ router.post("/register", async (req, res) => {
           const user = result.rows[0];
           // login User
           req.login(user, (err) => {
+            console.log("sucess");
             res.redirect(`/products`);
           });
         }
@@ -84,29 +85,7 @@ router.post("/register", async (req, res) => {
 // Login Users
 router.post("/login", passport.authenticate("local"), (req, res) => {
   if (!req.user) return res.json({ msg: "error" });
-  req.login(user, (err) => {
-    res.redirect(`/products`);
-  });
+  res.redirect(`/products`);
 });
-
-// router.post("/login", (req, res, next) => {
-//   passport.authenticate("local", (err, user, info) => {
-//     if (err) return next(err);
-//     if (!user) return res.status(400).json({ message: info.message });
-//     req.logIn(user, (err) => {
-//       if (err) return next(err);
-//       console.log("isAuthenticated:", req.isAuthenticated());
-//       return res.json({ isLoggedIn: true, user });
-//     });
-//   })(req, res, next);
-// });
-
-// router.post(
-//   "/login",
-//   passport.authenticate("local", {
-//     successRedirect: "/products",
-//     failureRedirect: "/login",
-//   })
-// );
 
 export default router;
