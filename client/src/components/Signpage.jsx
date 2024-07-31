@@ -10,7 +10,7 @@ import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import axios from "axios";
 //--------------------------------------------------------------//
 function Signpage(props) {
-  const { display, sign, btn, account, google, checkAuth } = props;
+  const { display, sign, btn, account, google } = props;
   // import axios and localhost
   const { url } = useContext(ResponsiveWidth);
   // navigate to another page
@@ -63,7 +63,6 @@ function Signpage(props) {
       );
       const { isLoggedIn } = res.data;
       if (isLoggedIn) {
-        checkAuth();
         navigate("/products");
       } else {
         navigate("/signup");
@@ -87,7 +86,6 @@ function Signpage(props) {
       const { isLoggedIn } = res.data;
       console.log(res.data);
       if (isLoggedIn) {
-            checkAuth();
         navigate("/products");
       } else {
         navigate("/signin");
