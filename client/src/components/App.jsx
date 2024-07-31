@@ -1,9 +1,7 @@
 // Routes
 import { Route, Routes } from "react-router-dom";
 // React Hooks
-import { createContext, useEffect, useState, useCallback } from "react";
-// Axios
-import axios from "axios";
+import { createContext, useEffect, useState } from "react";
 // Sign up and Sign In
 import { Signup, Signin } from "../pages/Access";
 // Mother Page for Home Page
@@ -20,34 +18,6 @@ export const ResponsiveWidth = createContext();
 
 function App() {
   const url = "https://agromart-uyly.onrender.com"; // backend
-
-  const [isAuthenticated, setIsAuthenticated] = useState({
-    isLoggedIn: null,
-    user: null,
-  });
-  const [isLoading, setIsLoading] = useState(true);
-
-  const checkAuth = useCallback(async () => {
-    try {
-      const res = await axios.get(`${url}/products`, {
-        withCredentials: true,
-      });
-      const { isLoggedIn, user } = res.data;
-      setIsAuthenticated({
-        isLoggedIn: isLoggedIn,
-        user: user, // Assuming `user` comes from the server response
-      });
-    } catch (error) {
-      console.error(error);
-      setIsAuthenticated({ isLoggedIn: false, user: null });
-    } finally {
-      setIsLoading(false);
-    }
-  }, [url]);
-
- useEffect(() => {
-   checkAuth();
- }, [checkAuth]);
 
   // ------------------Responsive Width --------------------------//
   const [matches, setMatches] = useState(
@@ -74,17 +44,14 @@ function App() {
             <Route
               path="/products"
               element={
-                <ProtectedRoute
-                  isAuthenticated={isAuthenticated}
-                  isLoading={isLoading}
-                >
-                  <Products isAuthenticated={isAuthenticated} />
+                <ProtectedRoute>
+                  <Products />
                 </ProtectedRoute>
               }
             />
           </Route>
-          <Route path="/signup" element={<Signup checkAuth={checkAuth} />} />
-          <Route path="/signin" element={<Signin checkAuth={checkAuth} />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/signin" element={<Signin />} />
         </Routes>
       </div>
     </ResponsiveWidth.Provider>
