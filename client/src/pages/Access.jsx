@@ -1,6 +1,6 @@
 import Signpage from "../components/Signpage";
 // -------------- Sign up page ---------------------
-function Signup() {
+function Signup({ checkAuth }) {
   return (
     <div>
       <Signpage
@@ -14,13 +14,14 @@ function Signup() {
             <span className="text-[#C76001]"> Sign In</span>
           </span>
         }
+        checkAuth={checkAuth}
       />
     </div>
   );
 }
 
 // ------------ Sign in Page --------------
-function Signin() {
+function Signin({ checkAuth }) {
   return (
     <div>
       <Signpage
@@ -34,6 +35,7 @@ function Signin() {
             <span className="text-[#C76001]"> Sign up</span>
           </span>
         }
+        checkAuth={checkAuth}
       />
     </div>
   );

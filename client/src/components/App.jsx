@@ -45,9 +45,9 @@ function App() {
     }
   }, [url]);
 
-  useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
+ useEffect(() => {
+   checkAuth();
+ }, [checkAuth]);
 
   // ------------------Responsive Width --------------------------//
   const [matches, setMatches] = useState(
@@ -83,8 +83,8 @@ function App() {
               }
             />
           </Route>
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/signin" element={<Signin />} />
+          <Route path="/signup" element={<Signup checkAuth={checkAuth} />} />
+          <Route path="/signin" element={<Signin checkAuth={checkAuth} />} />
         </Routes>
       </div>
     </ResponsiveWidth.Provider>
