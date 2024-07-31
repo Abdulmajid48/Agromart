@@ -5,6 +5,7 @@ const Products = ({ isAuthenticated }) => {
   const [displayName, setDisplayName] = useState("");
 
   const updateName = (userName) => {
+    console.log("Updating name with:", userName);
     if (userName) {
       try {
         // Try to parse the name as JSON
@@ -14,6 +15,7 @@ const Products = ({ isAuthenticated }) => {
         setDisplayName(loginName);
       } catch (error) {
         // If parsing fails, use the name directly
+        console.log("Parsing failed, using name directly");
         setDisplayName(userName);
       }
     } else {
@@ -24,6 +26,8 @@ const Products = ({ isAuthenticated }) => {
   useEffect(() => {
     updateName(userName);
   }, [userName]);
+
+  console.log("Rendering Products with displayName:", displayName);
 
   return <div>Hello Mr. {displayName}</div>;
 };
