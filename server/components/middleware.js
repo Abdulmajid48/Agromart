@@ -4,50 +4,49 @@ import cors from "cors";
 import session from "express-session";
 import passport from "passport";
 import env from "dotenv";
-import createMemoryStore from "memorystore";
+import db from "./db.js";
+import connectPgSimple from "connect-pg-simple";
+import cookieParser from "cookie-parser";
 
-// Initialize MemoryStore
-const MemoryStore = createMemoryStore(session);
+const router = express.Router();
+// Initialize PgSession
+const PgSession = connectPgSimple(session);
 
 env.config();
 
 // MIDDLEWARE
-const middleware = (app) => {
-  app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(
-    cors({
-      origin: "https://agromart-gamma.vercel.app", //frontend
-      credentials: true,
-      methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
-      allowedHeaders:
-        "Origin, X-Requested-With, Content-Type, Accept, Authorization",
-    })
-  );
-  app.use(bodyParser.json());
-  app.use(
-    session({
-      secret: process.env.SESSION_SECRET,
-      resave: false,
-      saveUninitialized: true,
-      cookie: { maxAge: 86400000 },
-      sameSite: "None",
+router.use(bodyParser.urlencoded({ extended: true }));
+router.use(
+  cors({
+    origin: "https://agromart-gamma.vercel.app",
+    credentials: true,
+    methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
+    allowedHeaders:
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+  })
+);
+router.use(express.json());
+router.use(cookieParser(process.env.SESSION_SECRET));
+router.use(
+  session({
+    store: new PgSession({
+      pool: db,
+      tableName: "session", // You can customize the session table name
+    }),
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 86400000,
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      expires: new Date(Date.now() + 86400000), // 24 hours from now
-      store: new MemoryStore({
-        checkPeriod: 86400000, // prune expired entries every 24h
-      }),
-    })
-  );
-  app.use(passport.initialize());
-  app.use(passport.session());
+    },
 
-  // Debug session
-  app.use((req, res, next) => {
-    console.log("Session ID:", req.sessionID);
-    console.log("Session:", req.session);
-    console.log("User:", req.user);
-    next();
-  });
-};
+    expires: new Date(Date.now() + 86400000), // 24 hours from now
+  })
+);
+router.use(passport.session());
+router.use(passport.initialize());
 
-export default middleware;
+export default router;
