@@ -43,7 +43,7 @@ router.get(
   "/auth/google/products",
   passport.authenticate("google"),
   (req, res) => {
-    res.redirect("/products");
+    res.redirect(`${url}/products`);
   }
 );
 

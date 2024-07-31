@@ -48,7 +48,7 @@ const ProtectedRoute = ({ children }) => {
   }
 
   if (authState.isLoggedIn) {
-    return children;
+    return children({ isAuthenticated: authState });
   }
 
   return <Navigate to="/signin" />;
