@@ -97,13 +97,9 @@ router.post("/login", (req, res, next) => {
         return next(err);
       }
       // Authentication successful
-      return res
-        .json({
-          msg: info.message || "Login successful",
-        })
-        .redirect("/products");
+      return res.redirect("/products")
     });
-  });
+  })(req, res, next); // Don't forget to invoke the middleware
 });
 
 export default router;
