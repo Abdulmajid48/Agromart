@@ -29,12 +29,11 @@ router.get("/logout", (req, res, next) => {
 router.get("/products", (req, res) => {
   console.log("isAuthenticated:", req.isAuthenticated());
   if (req.isAuthenticated()) {
-    res.json({ isLoggedIn: "user is certified", user: req.user.name });
+    res.json({ isLoggedIn: true, user: { name: req.user.name } });
   } else {
-    res.redirect("/login");
+    res.status(401).json({ isLoggedIn: false, user: null });
   }
 });
-
 // Google Authentication
 router.get("/auth/google", passport.authenticate("google"));
 

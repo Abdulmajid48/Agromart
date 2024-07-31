@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 const Products = ({ isAuthenticated }) => {
-  const userName = isAuthenticated?.user?.name;
+  const userName = isAuthenticated?.user?.name || "";
   const [displayName, setDisplayName] = useState("");
 
   const updateName = (userName) => {

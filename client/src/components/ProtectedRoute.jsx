@@ -12,29 +12,31 @@ const ProtectedRoute = ({ children }) => {
     error: null,
   });
 
-  const checkAuth = useCallback(async () => {
-    console.log("Checking auth...");
-    try {
-      const res = await axios.get(`${url}/products`, { withCredentials: true });
-      console.log("Server response:", res.data);
-      const { isLoggedIn, user } = res.data;
-      setAuthState({
-        isLoggedIn,
-        user,
-        isLoading: false,
-        error: null,
-      });
-      console.log("Updated auth state:", { isLoggedIn, user });
-    } catch (error) {
-      console.error("Auth check error:", error);
-      setAuthState({
-        isLoggedIn: false,
-        user: null,
-        isLoading: false,
-        error: error.message,
-      });
-    }
-  }, [url]);
+ const checkAuth = useCallback(async () => {
+   console.log("Checking auth...");
+   try {
+     const res = await axios.get(`${url}/products`, {
+       withCredentials: true,
+     });
+     console.log("Server response:", res.data);
+     const { isLoggedIn, user } = res.data;
+     setAuthState({
+       isLoggedIn: isLoggedIn === true, // Ensure it's a boolean
+       user: user || null, // Ensure it's null if not provided
+       isLoading: false,
+       error: null,
+     });
+     console.log("Updated auth state:", { isLoggedIn, user });
+   } catch (error) {
+     console.error("Auth check error:", error);
+     setAuthState({
+       isLoggedIn: false,
+       user: null,
+       isLoading: false,
+       error: error.response?.data?.message || error.message,
+     });
+   }
+ }, [url]);
 
   useEffect(() => {
     checkAuth();
