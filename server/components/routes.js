@@ -97,16 +97,13 @@ router.post("/login", (req, res, next) => {
         return next(err);
       }
       // Authentication successful
-      return res.json({
-        msg: info.message || "Login successful",
-        redirect: "/products",
-      });
+      return res
+        .json({
+          msg: info.message || "Login successful",
+        })
+        .redirect("/products");
     });
-  })(req, res, next);
+  });
 });
-// router.post("/login", passport.authenticate("local"), (req, res) => {
-//   if (!req.user) return res.json({ msg: "error" });
-//   res.redirect(`/products`);
-// });
 
 export default router;
