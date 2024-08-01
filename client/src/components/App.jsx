@@ -17,7 +17,7 @@ import ProtectedRoute from "./ProtectedRoute";
 export const ResponsiveWidth = createContext();
 
 function App() {
-  const url = "https://agromart-uyly.onrender.com"; // backend
+  //const url = "https://agromart-uyly.onrender.com"; // backend
 
   // ------------------Responsive Width --------------------------//
   const [matches, setMatches] = useState(
@@ -35,7 +35,7 @@ function App() {
   }, []);
 
   return (
-    <ResponsiveWidth.Provider value={{ matches, url }}>
+    <ResponsiveWidth.Provider value={{ matches }}>
       <div className="App">
         <Routes>
           <Route path="/" element={<SharedLayout />}>

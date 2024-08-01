@@ -1,9 +1,9 @@
 // Hooks
-import { useState, useContext } from "react";
+import { useState } from "react";
 // React-router
 import { useNavigate, NavLink } from "react-router-dom";
 //  createRouter for axios and localhost
-import { ResponsiveWidth } from "./App";
+//import { ResponsiveWidth } from "./App";
 // Material Icons
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
@@ -12,7 +12,7 @@ import axios from "axios";
 function Signpage(props) {
   const { display, sign, btn, account, google } = props;
   // import axios and localhost
-  const { url } = useContext(ResponsiveWidth);
+  //const { url } = useContext(ResponsiveWidth);
   // navigate to another page
   const navigate = useNavigate();
   //-------------------------------------//
@@ -53,7 +53,7 @@ function Signpage(props) {
     const { fullname, email, password } = formData;
     try {
       const res = await axios.post(
-        `${url}/register`,
+        `api/register`,
         {
           fullname,
           email,
@@ -76,7 +76,7 @@ function Signpage(props) {
     const { email, password } = formData;
     try {
       const res = await axios.post(
-        `${url}/login`,
+        `api/login`,
         {
           email,
           password,
@@ -96,7 +96,7 @@ function Signpage(props) {
   };
 
   const handleGoogle = async () => {
-    window.location.href = `${url}/auth/google`;
+    window.location.href = `api/auth/google`;
   };
   // --------------------------------------------------------------------------//
   return (

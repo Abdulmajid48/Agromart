@@ -26,16 +26,13 @@ router.get("/logout", (req, res, next) => {
 });
 
 // Products Page
-const ensureAuthenticated = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.status(401).json({ isLoggedIn: false, user: null });
-};
-
-router.get("/products", ensureAuthenticated, (req, res) => {
+router.get("/products", (req, res) => {
   console.log("isAuthenticated:", req.isAuthenticated());
-  res.json({ isLoggedIn: true, user: { name: req.user.name } });
+  if (req.isAuthenticated()) {
+    res.json({ isLoggedIn: true, user: { name: req.user.name } });
+  } else {
+    res.status(401).json({ isLoggedIn: false, user: null });
+  }
 });
 
 // Google Authentication
