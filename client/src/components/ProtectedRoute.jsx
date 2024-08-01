@@ -12,53 +12,50 @@ const ProtectedRoute = ({ children }) => {
     error: null,
   });
 
- const checkAuth = useCallback(async () => {
-   console.log("Checking auth...");
-   try {
-     const res = await axios.get(`${url}/products`, {
-       withCredentials: true,
-     });
-     console.log("Server response:", res.data);
-     const { isLoggedIn, user } = res.data;
-     setAuthState({
-       isLoggedIn: isLoggedIn === true, // Ensure it's a boolean
-       user: user || null, // Ensure it's null if not provided
-       isLoading: false,
-       error: null,
-     });
-     console.log("Updated auth state:", { isLoggedIn, user });
-   } catch (error) {
-     console.error("Auth check error:", error);
-     setAuthState({
-       isLoggedIn: false,
-       user: null,
-       isLoading: false,
-       error: error.response?.data?.message || error.message,
-     });
-   }
- }, [url]);
+  // Function to check authentication status
+  const checkAuth = useCallback(async () => {
+    try {
+      const res = await axios.get(`${url}/products`, {
+        withCredentials: true,
+      });
+      const { isLoggedIn, user } = res.data;
+      setAuthState({
+        isLoggedIn: !!isLoggedIn, // Ensure it's a boolean
+        user: user || null, // Ensure it's null if not provided
+        isLoading: false,
+        error: null,
+      });
+    } catch (error) {
+      setAuthState({
+        isLoggedIn: false,
+        user: null,
+        isLoading: false,
+        error: error.response?.data?.message || error.message,
+      });
+    }
+  }, [url]);
 
+  // Run the authentication check on component mount
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
 
-  console.log("Current auth state:", authState);
-
+  // If the authentication status is still loading, show a loading indicator
   if (authState.isLoading) {
     return <div>Loading...</div>;
   }
 
+  // If there is an error during authentication, show an error message
   if (authState.error) {
     return <div>Error: {authState.error}</div>;
   }
 
-  console.log("Auth state before rendering:", authState);
-
+  // If the user is authenticated, render the children components
   if (authState.isLoggedIn) {
     return children({ isAuthenticated: authState });
   }
 
-  console.log("Navigating to signin");
+  // If the user is not authenticated, redirect to the sign-in page
   return <Navigate to="/signin" />;
 };
 
