@@ -69,7 +69,7 @@ const ProtectedRoute = ({ children }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await axios.get("/products");
+        const res = await axios.get("api/products");
         setIsAuthenticated(res.data.isLoggedIn);
       } catch (error) {
         setIsAuthenticated(false);
