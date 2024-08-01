@@ -17,6 +17,10 @@ const ProtectedRoute = ({ children }) => {
     try {
       const res = await axios.get(`${url}/products`, {
         withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        responseType: "json",
       });
       const { isLoggedIn, user } = res.data;
       setAuthState({
