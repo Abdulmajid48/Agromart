@@ -12,6 +12,7 @@ import Home from "../pages/Home";
 import AboutUs from "../pages/AboutUs";
 import Products from "../pages/Products";
 import ProtectedRoute from "./ProtectedRoute";
+import { AuthProvider } from "./AuthContext";
 
 // createContext
 export const ResponsiveWidth = createContext();
@@ -38,20 +39,22 @@ function App() {
     <ResponsiveWidth.Provider value={{ matches }}>
       <div className="App">
         <Routes>
-          <Route path="/" element={<SharedLayout />}>
-            <Route index element={<Home />} />
-            <Route path="/aboutus" element={<AboutUs />} />
-            <Route
-              path="/products"
-              element={
-                <ProtectedRoute>
-                  <Products />
-                </ProtectedRoute>
-              }
-            />
-          </Route>
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/signin" element={<Signin />} />
+          <AuthProvider>
+            <Route path="/" element={<SharedLayout />}>
+              <Route index element={<Home />} />
+              <Route path="/aboutus" element={<AboutUs />} />
+              <Route
+                path="/products"
+                element={
+                  <ProtectedRoute>
+                    <Products />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/signin" element={<Signin />} />
+          </AuthProvider>
         </Routes>
       </div>
     </ResponsiveWidth.Provider>
