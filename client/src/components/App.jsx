@@ -36,10 +36,10 @@ function App() {
   }, []);
 
   return (
-    <AuthProvider>
-      <ResponsiveWidth.Provider value={{ matches }}>
-        <div className="App">
-          <Routes>
+    <ResponsiveWidth.Provider value={{ matches }}>
+      <div className="App">
+        <Routes>
+          <AuthProvider>
             <Route path="/" element={<SharedLayout />}>
               <Route index element={<Home />} />
               <Route path="/aboutus" element={<AboutUs />} />
@@ -54,10 +54,10 @@ function App() {
             </Route>
             <Route path="/signup" element={<Signup />} />
             <Route path="/signin" element={<Signin />} />
-          </Routes>
-        </div>
-      </ResponsiveWidth.Provider>
-    </AuthProvider>
+          </AuthProvider>
+        </Routes>
+      </div>
+    </ResponsiveWidth.Provider>
   );
 }
 
