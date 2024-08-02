@@ -1,5 +1,5 @@
 // Hooks
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 // React-router
 import { useNavigate, NavLink } from "react-router-dom";
 //  createRouter for axios and localhost
@@ -8,8 +8,9 @@ import { useNavigate, NavLink } from "react-router-dom";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import axios from "axios";
+import { AuthContext } from "./AuthContext";
 //--------------------------------------------------------------//
-export const GuestUser = createContext()
+export const GuestUser = createContext();
 function Signpage(props) {
   const { display, sign, btn, account, google } = props;
   // import axios and localhost
@@ -26,8 +27,7 @@ function Signpage(props) {
     password: "",
   });
 
-  const [guest, setGuest] = useState("");
-
+  const { setUser } = useContext(AuthContext);
   // ------------------------------------------//
   // handlechange for input value
   const handleChange = (e) => {
@@ -67,10 +67,9 @@ function Signpage(props) {
       );
       const { isLoggedIn, user } = res.data;
       if (isLoggedIn) {
-        console.log(user)
-          setGuest(user);
+        console.log(user);
+        setUser(user);
         navigate("/products");
-      
       } else {
         navigate("/signup");
       }
@@ -94,7 +93,7 @@ function Signpage(props) {
       console.log(res.data);
       if (isLoggedIn) {
         console.log(user);
-         setGuest(user);
+         setUser(user);
         navigate("/products");
       } else {
         navigate("/signin");
@@ -109,8 +108,7 @@ function Signpage(props) {
   };
   // --------------------------------------------------------------------------//
   return (
-    <GuestUser.Provider value={{guest}}>
-      <div className="h-dvh w-dvw flex justify-center items-center ">
+    <div className="h-dvh w-dvw flex justify-center items-center ">
       {/* Background div image */}
       <div
         className="  flex justify-center items-center h-full sm:w-full w-dvw m-auto bg-cover relative"
@@ -250,8 +248,6 @@ function Signpage(props) {
         </div>
       </div>
     </div>
-    </GuestUser.Provider>
-    
   );
 }
 export default Signpage;
