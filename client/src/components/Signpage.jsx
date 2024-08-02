@@ -2,8 +2,6 @@
 import { createContext, useContext, useState } from "react";
 // React-router
 import { useNavigate, NavLink } from "react-router-dom";
-//  createRouter for axios and localhost
-//import { ResponsiveWidth } from "./App";
 // Material Icons
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
@@ -13,8 +11,6 @@ import { AuthContext } from "./AuthContext";
 export const GuestUser = createContext();
 function Signpage(props) {
   const { display, sign, btn, account, google } = props;
-  // import axios and localhost
-  //const { url } = useContext(ResponsiveWidth);
   // navigate to another page
   const navigate = useNavigate();
   //-------------------------------------//
