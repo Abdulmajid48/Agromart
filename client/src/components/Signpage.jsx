@@ -1,5 +1,5 @@
 // Hooks
-import { useState } from "react";
+import { createContext, useState } from "react";
 // React-router
 import { useNavigate, NavLink } from "react-router-dom";
 //  createRouter for axios and localhost
@@ -9,6 +9,7 @@ import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import axios from "axios";
 //--------------------------------------------------------------//
+export const GuestUser = createContext()
 function Signpage(props) {
   const { display, sign, btn, account, google } = props;
   // import axios and localhost
@@ -24,6 +25,9 @@ function Signpage(props) {
     email: "",
     password: "",
   });
+
+  const [guest, setGuest] = useState("");
+
   // ------------------------------------------//
   // handlechange for input value
   const handleChange = (e) => {
@@ -61,9 +65,12 @@ function Signpage(props) {
         },
         { ...config }
       );
-      const { isLoggedIn } = res.data;
+      const { isLoggedIn, user } = res.data;
       if (isLoggedIn) {
+        console.log(user)
+          setGuest(user);
         navigate("/products");
+      
       } else {
         navigate("/signup");
       }
@@ -83,9 +90,11 @@ function Signpage(props) {
         },
         { ...config }
       );
-      const { isLoggedIn } = res.data;
+      const { isLoggedIn, user } = res.data;
       console.log(res.data);
       if (isLoggedIn) {
+        console.log(user);
+         setGuest(user);
         navigate("/products");
       } else {
         navigate("/signin");
@@ -100,7 +109,8 @@ function Signpage(props) {
   };
   // --------------------------------------------------------------------------//
   return (
-    <div className="h-dvh w-dvw flex justify-center items-center ">
+    <GuestUser.Provider value={{guest}}>
+      <div className="h-dvh w-dvw flex justify-center items-center ">
       {/* Background div image */}
       <div
         className="  flex justify-center items-center h-full sm:w-full w-dvw m-auto bg-cover relative"
@@ -240,6 +250,8 @@ function Signpage(props) {
         </div>
       </div>
     </div>
+    </GuestUser.Provider>
+    
   );
 }
 export default Signpage;

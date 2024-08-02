@@ -1,31 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { GuestUser } from "./Signpage";
 
-const Products = ({ isAuthenticated }) => {
-  const userName = isAuthenticated?.user?.name || "";
+const Products = () => {
+  const { guest } = useContext(GuestUser);
   const [displayName, setDisplayName] = useState("");
 
-  // Function to update the display name
-  const updateName = (userName) => {
-    if (userName) {
+  useEffect(() => {
+    if (guest && guest.name) {
       try {
-        // Try to parse the name as JSON
-        const parsedName = JSON.parse(userName);
-        const loginName = `${parsedName.givenName} ${parsedName.familyName}`;
-        setDisplayName(loginName);
+        const parsedName = JSON.parse(guest.name);
+        setDisplayName(`${parsedName.givenName} ${parsedName.familyName}`);
       } catch (error) {
-        // If parsing fails, use the name directly
-        setDisplayName(userName);
+        setDisplayName(guest.name);
       }
     } else {
-      // Reset display name if userName is undefined or null
       setDisplayName("");
     }
-  };
-
-  // Update displayName whenever userName changes
-  useEffect(() => {
-    updateName(userName);
-  }, [userName]);
+  }, [guest]);
 
   return <div>Hello Mr. {displayName}</div>;
 };

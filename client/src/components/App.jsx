@@ -45,9 +45,7 @@ function App() {
               path="/products"
               element={
                 <ProtectedRoute>
-                  {({ isAuthenticated }) => (
-                    <Products isAuthenticated={isAuthenticated} />
-                  )}
+                  <Products />
                 </ProtectedRoute>
               }
             />

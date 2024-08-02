@@ -71,7 +71,10 @@ router.post("/register", async (req, res) => {
           // login User
           req.login(user, (err) => {
             console.log("sucess");
-            res.redirect(`/products`);
+            return res.json({
+              isLoggedIn: "user is certified",
+              user: req.user.name,
+            });
           });
         }
       });
