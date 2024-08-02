@@ -1,10 +1,5 @@
-// import { useContext } from "react";
-// import { AuthContext } from "../components/AuthContext";
+const Products = () => {
+  return <div>Hello Mr.</div>;
+};
 
-// const Products = () => {
-//   const { user } = useContext(AuthContext);
-
-//   return <div>Hello Mr. {user?.name || "Guest"}</div>;
-// };
-
-// export default Products;
+export default Products;
