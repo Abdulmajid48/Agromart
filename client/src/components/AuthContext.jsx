@@ -1,9 +1,8 @@
-// In a new file, e.g., AuthContext.js
-import { createContext, useState } from "react";
+import{ createContext, useState } from "react";
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   return (
@@ -13,4 +12,4 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-export default AuthProvider;
+export { AuthContext, AuthProvider };
