@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000; // PORT
 // MIDDLEWARE
 app.use(middleware);
 // Routes
-app.use(allroutes);
+app.use("/", allroutes);
 
 // PORT
 app.listen(port, () => {

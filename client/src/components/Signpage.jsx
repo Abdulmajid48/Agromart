@@ -89,7 +89,6 @@ function Signpage(props) {
       console.log(res.data);
       if (isLoggedIn) {
         console.log(user);
-        // setUser(user);
         navigate("/products");
       } else {
         navigate("/signin");
