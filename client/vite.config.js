@@ -14,13 +14,13 @@ export default defineConfig({
   },
   server: {
     historyApiFallback: true,
-    proxy: {
-      "/api": {
-        target: "https://agromart-uyly.onrender.com",
-        changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/api/, ""),
-      },
-    },
+    // proxy: {
+    //   "/api": {
+    //     target: "https://agromart-uyly.onrender.com",
+    //     changeOrigin: true,
+    //     secure: false,
+    //     rewrite: (path) => path.replace(/^\/api/, ""),
+    //   },
+    // },
   },
 });

@@ -53,7 +53,7 @@ function Signpage(props) {
     const { fullname, email, password } = formData;
     try {
       const res = await axios.post(
-        `api/register`,
+        `https://agromart-uyly.onrender.com/register`,
         {
           fullname,
           email,
@@ -78,7 +78,7 @@ function Signpage(props) {
     const { email, password } = formData;
     try {
       const res = await axios.post(
-        `api/login`,
+        `https://agromart-uyly.onrender.com/login`,
         {
           email,
           password,
