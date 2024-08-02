@@ -1,12 +1,12 @@
 // Hooks
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 // React-router
 import { useNavigate, NavLink } from "react-router-dom";
 // Material Icons
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import axios from "axios";
-import { AuthContext } from "./AuthContext";
+//import { AuthContext } from "./AuthContext";
 //--------------------------------------------------------------//
 export const GuestUser = createContext();
 function Signpage(props) {
@@ -23,7 +23,7 @@ function Signpage(props) {
     password: "",
   });
 
-  const { setUser } = useContext(AuthContext);
+  //const { setUser } = useContext(AuthContext);
   // ------------------------------------------//
   // handlechange for input value
   const handleChange = (e) => {
@@ -64,7 +64,7 @@ function Signpage(props) {
       const { isLoggedIn, user } = res.data;
       if (isLoggedIn) {
         console.log(user);
-        setUser(user);
+        // setUser(user);
         navigate("/products");
       } else {
         navigate("/signup");
@@ -89,7 +89,7 @@ function Signpage(props) {
       console.log(res.data);
       if (isLoggedIn) {
         console.log(user);
-         setUser(user);
+        // setUser(user);
         navigate("/products");
       } else {
         navigate("/signin");
