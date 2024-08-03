@@ -105,12 +105,14 @@ const isAuth = (req, res, next) => {
 };
 // Products Page
 router.get("/products", isAuth, (req, res) => {
-  console.log("Full session data:", req.session);
+  console.log("Protected route accessed");
+  console.log("req.user:", req.user);
+  console.log("req.isAuthenticated():", req.isAuthenticated());
   const user = {
     ...req.user,
     isLoggedIn: true,
   };
-  console.log(user);
+  console.log("User object:", user);
   res.json(user);
 });
 
