@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import session from "express-session";
+import session from "cookie-session";
 import passport from "passport";
 import dotenv from "dotenv";
 import db from "./db.js";
@@ -42,8 +42,7 @@ router.use(
       httpOnly: true,
       secure: true,
     },
-
-    expires: new Date(Date.now() + 86400000), // 24 hours from now
+    //expires: new Date(Date.now() + 86400000), // 24 hours from now
   })
 );
 
