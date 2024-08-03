@@ -95,23 +95,5 @@ router.post("/login", (req, res, next) => {
   })(req, res, next); // Don't forget to invoke the middleware
 });
 
-const isAuth = (req, res, next) => {
-  console.log("isAuth middleware called");
-  console.log("req.user:", req.user);
-  if (req.user) {
-    return next();
-  }
-  return res.status(401).json({ isLoggedIn: false });
-};
-// Products Page
-router.get("/products", isAuth, (req, res) => {
-  console.log("Full session data:", req.session);
-  const user = {
-    ...req.user,
-    isLoggedIn: true,
-  };
-  console.log(user);
-  res.json(user);
-});
 
 export default router;
