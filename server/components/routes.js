@@ -2,12 +2,12 @@ import express from "express";
 import db from "./db.js";
 import passport from "passport";
 import bcrypt from "bcrypt";
-import env from "dotenv";
+import dotenv from "dotenv";
 import "./local-strategy.js";
 
 const router = express.Router();
 const saltRounds = 10;
-env.config(); //dotenv
+dotenv.config(); //dotenv
 const url = process.env.FRONTEND;
 
 // Login page GET

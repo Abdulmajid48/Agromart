@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import session from "express-session";
 import passport from "passport";
-import env from "dotenv";
+import dotenv from "dotenv";
 import db from "./db.js";
 import connectPgSimple from "connect-pg-simple";
 import cookieParser from "cookie-parser";
@@ -12,7 +12,7 @@ const router = express.Router();
 // Initialize PgSession
 const PgSession = connectPgSimple(session);
 
-env.config();
+dotenv.config();
 
 // MIDDLEWARE
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -46,7 +46,8 @@ router.use(
     expires: new Date(Date.now() + 86400000), // 24 hours from now
   })
 );
-router.use(passport.session());
+
 router.use(passport.initialize());
+router.use(passport.session());
 
 export default router;

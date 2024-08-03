@@ -1,9 +1,9 @@
 import express from "express";
 import allroutes from "./components/routes.js";
-import env from "dotenv";
+import dotenv from "dotenv";
 import middleware from "./components/middleware.js";
 
-env.config(); //dotenv
+dotenv.config(); //dotenv
 
 const app = express();
 const port = process.env.PORT || 3000; // PORT
