@@ -32,6 +32,8 @@ router.use(
     store: new PgSession({
       pool: db,
       tableName: "session", // You can customize the session table name
+      pruneSessionInterval: 60 * 15,
+      errorLog: console.error.bind(console),
     }),
     secret: process.env.SESSION_SECRET,
     resave: false,
