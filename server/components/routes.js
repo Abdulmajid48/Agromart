@@ -3,7 +3,7 @@ import db from "./db.js";
 import passport from "passport";
 import bcrypt from "bcrypt";
 import env from "dotenv";
-import passport from "./local-strategy.js";
+import "./local-strategy.js";
 
 const router = express.Router();
 const saltRounds = 10;
