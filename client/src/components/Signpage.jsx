@@ -63,7 +63,7 @@ function Signpage(props) {
       );
       const { isLoggedIn, user } = res.data;
       if (isLoggedIn) {
-        console.log(user);
+        console.log(`${user} in signinpage`);
         // setUser(user);
         navigate("/products");
       } else {
