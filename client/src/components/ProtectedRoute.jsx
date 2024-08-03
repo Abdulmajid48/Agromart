@@ -24,6 +24,7 @@ const ProtectedRoute = ({ children }) => {
         },
         responseType: "json",
       });
+       console.log(result);
       setUser({ ...result.data });
     } catch (error) {
       console.log(error);

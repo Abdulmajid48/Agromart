@@ -1,7 +1,8 @@
-import AuthProvider from "../components/AuthContext";
+import { AuthContext } from "../components/ProtectedRoute";
 import { useContext } from "react";
 const Products = () => {
-  const { user } = useContext(AuthProvider);
+  const { user } = useContext(AuthContext);
+  console.log(user);
   return <div>Hello Mr.{user}</div>;
 };
 

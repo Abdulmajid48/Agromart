@@ -3,7 +3,7 @@ import db from "./db.js";
 import passport from "passport";
 import bcrypt from "bcrypt";
 import env from "dotenv";
-import "./local-strategy.js";
+import passport from "./local-strategy.js";
 
 const router = express.Router();
 const saltRounds = 10;
@@ -24,17 +24,6 @@ router.get("/logout", (req, res, next) => {
     res.json({ gethomepage: true });
   });
 });
-const isAuth = (req, res, next)=>{
-  if (req.user) next();
-  res.json({isLoggedIn:false})
-}
-// Products Page
-router.get("/products", isAuth, (req, res) => {
- const user = {
-  ...req.user, isLoggedIn:true
- }
- res.json(user)
-});
 
 // Google Authentication
 router.get("/auth/google", passport.authenticate("google"));
@@ -42,7 +31,7 @@ router.get("/auth/google", passport.authenticate("google"));
 // Google auth redirect (redirect Callback URL)
 router.get(
   "/auth/google/products",
-  passport.authenticate("google", {session:true}),
+  passport.authenticate("google", { session: true }),
   (req, res) => {
     res.redirect(`${url}/products`);
   }
@@ -104,6 +93,20 @@ router.post("/login", (req, res, next) => {
       return res.json({ isLoggedIn: "user is certified", user: req.user.name });
     });
   })(req, res, next); // Don't forget to invoke the middleware
+});
+
+const isAuth = (req, res, next) => {
+  if (req.user) next();
+  res.json({ isLoggedIn: false });
+};
+// Products Page
+router.get("/products", isAuth, (req, res) => {
+  const user = {
+    ...req.user,
+    isLoggedIn: true,
+  };
+  console.log(user);
+  res.json(user);
 });
 
 export default router;

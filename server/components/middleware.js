@@ -40,7 +40,7 @@ router.use(
       maxAge: 86400000,
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV === "production" ? "true" : "auto",
     },
 
     expires: new Date(Date.now() + 86400000), // 24 hours from now
