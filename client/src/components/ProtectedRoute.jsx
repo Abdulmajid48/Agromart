@@ -19,12 +19,8 @@ const ProtectedRoute = ({ children }) => {
     try {
       const result = axios.get("https://agromart-uyly.onrender.com/products", {
         withCredentials: true,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        responseType: "json",
       });
-       console.log(result);
+      console.log(result);
       setUser({ ...result.data });
     } catch (error) {
       console.log(error);

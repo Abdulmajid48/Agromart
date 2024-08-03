@@ -97,7 +97,7 @@ router.post("/login", (req, res, next) => {
 
 const isAuth = (req, res, next) => {
   if (req.user) next();
-  res.json({ isLoggedIn: false });
+  return res.json({ isLoggedIn: false });
 };
 // Products Page
 router.get("/products", isAuth, (req, res) => {

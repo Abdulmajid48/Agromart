@@ -6,7 +6,6 @@ import { useNavigate, NavLink } from "react-router-dom";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import axios from "axios";
-//import { AuthContext } from "./AuthContext";
 //--------------------------------------------------------------//
 export const GuestUser = createContext();
 function Signpage(props) {
