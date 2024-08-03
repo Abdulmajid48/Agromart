@@ -96,14 +96,16 @@ router.post("/login", (req, res, next) => {
 });
 
 const isAuth = (req, res, next) => {
+  console.log("isAuth middleware called");
+  console.log("req.user:", req.user);
   if (req.user) {
     return next();
   }
   return res.status(401).json({ isLoggedIn: false });
 };
-
 // Products Page
 router.get("/products", isAuth, (req, res) => {
+  console.log("Full session data:", req.session);
   const user = {
     ...req.user,
     isLoggedIn: true,
