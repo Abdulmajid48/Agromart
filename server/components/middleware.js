@@ -38,7 +38,7 @@ router.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 86400000,
-      sameSite:  lax,
+      sameSite: " lax",
       httpOnly: true,
       secure:  true,
     },
