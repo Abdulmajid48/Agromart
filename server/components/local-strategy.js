@@ -57,17 +57,18 @@ passport.use(
       scope: ["profile", "email"],
     },
     async (accessToken, refreshToken, profile, done) => {
+      const account = profile._json;
       try {
         // Check if email already exist
-        console.log(profile);
+        console.log(account);
         const result = await db.query("SELECT * FROM users WHERE email = $1", [
-          profile.email,
+          account.email,
         ]);
         // if email doesnt exist
         if (result.rows.length === 0) {
           const newUser = await db.query(
             "INSERT INTO users (name, email, password) VALUES ($1, $2, $3)",
-            [profile.name, profile.email, "google"]
+            [account.name, account.email, "google"]
           );
           return done(null, newUser.rows[0]);
           // if email exist, return user

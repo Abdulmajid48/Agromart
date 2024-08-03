@@ -24,15 +24,16 @@ router.get("/logout", (req, res, next) => {
     res.json({ gethomepage: true });
   });
 });
-
+const isAuth = (req, res, next)=>{
+  if (req.user) next();
+  res.json({isLoggedIn:false})
+}
 // Products Page
-router.get("/products", (req, res) => {
-  console.log("isAuthenticated:", req.isAuthenticated());
-  if (req.isAuthenticated()) {
-    res.json({ isLoggedIn: true, user: { name: req.user.name } });
-  } else {
-    res.status(401).json({ isLoggedIn: false, user: null });
-  }
+router.get("/products", isAuth, (req, res) => {
+ const user = {
+  ...req.user, isLoggedIn:true
+ }
+ res.json(user)
 });
 
 // Google Authentication
@@ -41,7 +42,7 @@ router.get("/auth/google", passport.authenticate("google"));
 // Google auth redirect (redirect Callback URL)
 router.get(
   "/auth/google/products",
-  passport.authenticate("google"),
+  passport.authenticate("google", {session:true}),
   (req, res) => {
     res.redirect(`${url}/products`);
   }

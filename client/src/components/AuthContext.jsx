@@ -1,15 +1,37 @@
-import{ createContext, useState } from "react";
+import axios from "axios";
+import { createContext, useEffect, useState } from "react";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  // const config = {
+  //   withCredentials: true,
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   responseType: "json",
+  // };
+  const [user, setUser] = useState(() => ({
+    isLoggedIn: false,
+  }));
 
+  useEffect(() => {
+    try {
+      const result = axios.get("https://agromart-uyly.onrender.com/products", {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        responseType: "json",
+      });
+      setUser({ ...result.data });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
   );
 };
 
-export { AuthContext, AuthProvider };
+export default AuthProvider;

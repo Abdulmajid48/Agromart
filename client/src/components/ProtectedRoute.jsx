@@ -1,32 +1,37 @@
-// import { useContext, useEffect, useState } from "react";
-// import { Navigate } from "react-router-dom";
-// import { GuestUser } from "./Signpage";
+import axios from "axios";
+import { createContext, useEffect, useState } from "react";
 
-// const ProtectedRoute = ({ children }) => {
-//   const { guest } = useContext(GuestUser);
-//   const [isAuthenticated, setIsAuthenticated] = useState(null);
-
-//   useEffect(() => {
-//     const checkAuth = async () => {
-//       try {
-//         if (!guest) return setIsAuthenticated(false);
-//         return setIsAuthenticated(true);
-//       } catch (error) {
-//         console.log(error);
-//       }
-//     };
-//     checkAuth();
-//   }, [guest]);
-
-//   if (isAuthenticated === false) return <div>Loading...</div>;
-//   return isAuthenticated ? children : <Navigate to="/login" />;
-// };
-
-//import { AuthContext } from "./AuthContext";
+export const AuthContext = createContext();
 
 const ProtectedRoute = ({ children }) => {
-  //const { user } = useContext(AuthContext);
+  // const config = {
+  //   withCredentials: true,
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   responseType: "json",
+  // };
+  const [user, setUser] = useState(() => ({
+    isLoggedIn: false,
+  }));
 
-  return children;
+  useEffect(() => {
+    try {
+      const result = axios.get("https://agromart-uyly.onrender.com/products", {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        responseType: "json",
+      });
+      setUser({ ...result.data });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+  return (
+    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+  );
 };
+
 export default ProtectedRoute;

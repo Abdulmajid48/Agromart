@@ -99,7 +99,8 @@ function Signpage(props) {
   };
 
   const handleGoogle = async () => {
-    window.location.href = `api/auth/google`;
+    const str = "https://agromart-uyly.onrender.com/auth/google";
+    window.open(str, "self");
   };
   // --------------------------------------------------------------------------//
   return (
