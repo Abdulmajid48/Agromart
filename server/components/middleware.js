@@ -40,7 +40,7 @@ router.use(
       maxAge: 86400000,
       sameSite: " lax",
       httpOnly: true,
-      secure:  true,
+      secure: true,
     },
 
     expires: new Date(Date.now() + 86400000), // 24 hours from now
