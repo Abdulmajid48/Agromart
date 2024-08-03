@@ -4,15 +4,8 @@ import { createContext, useEffect, useState } from "react";
 export const AuthContext = createContext();
 
 const ProtectedRoute = ({ children }) => {
-  // const config = {
-  //   withCredentials: true,
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   responseType: "json",
-  // };
   const [user, setUser] = useState(() => ({
-    isLoggedIn: false,
+    LoggedIn: false,
   }));
 
   useEffect(() => {
