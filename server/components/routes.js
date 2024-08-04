@@ -4,6 +4,7 @@ import passport from "passport";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import "./local-strategy.js";
+import passport from "passport";
 
 const router = express.Router();
 const saltRounds = 10;
@@ -46,7 +47,7 @@ router.post("/register", async (req, res) => {
       email,
     ]);
     if (response.rows[0]) {
-      res.json({ msg: "email already exist, proceed to login page" }); //redirect to login page if email exist
+      res.json({ msg: "email already exist, proceed to login page" });
     } else {
       //hash password with bcrypt if email doesnt exist
       bcrypt.hash(password, saltRounds, async (err, hash) => {

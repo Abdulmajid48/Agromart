@@ -18,7 +18,7 @@ dotenv.config();
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(
   cors({
-    origin: "https://agromart-roan.vercel.app",
+    origin: process.env.FRONTEND,
     credentials: true,
     methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
     allowedHeaders:
