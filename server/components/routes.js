@@ -4,7 +4,6 @@ import passport from "passport";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import "./local-strategy.js";
-import passport from "passport";
 
 const router = express.Router();
 const saltRounds = 10;
@@ -101,8 +100,9 @@ const isAuth = (req, res, next) => {
   console.log("req.user:", req.user);
   if (req.user) {
     return next();
+  } else {
+    return res.status(401).json({ isLoggedIn: false });
   }
-  return res.status(401).json({ isLoggedIn: false });
 };
 // Products Page
 router.get("/products", isAuth, (req, res) => {

@@ -1,10 +1,10 @@
 // POSTGRESQL DATABASE
-import pg from "pg";
+import { Pool } from "pg";
 import dotenv from "dotenv";
 
 dotenv.config(); // dotenv
 
-const db = new pg.Pool({
+const db = new Pool({
   user: process.env.PG_USER,
   host: process.env.PG_HOST,
   database: process.env.PG_DATABASE,
