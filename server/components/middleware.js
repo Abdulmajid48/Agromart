@@ -40,9 +40,9 @@ router.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 86400000,
-      sameSite: process.NODE_ENV === "production" ? "lax" : "none",
-      httpOnly: true,
-      secure: process.NODE_ENV === "production",
+      // sameSite: process.NODE_ENV === "production" ? "lax" : "none",
+      // httpOnly: true,
+      // secure: process.NODE_ENV === "production",
     },
     //expires: new Date(Date.now() + 86400000), // 24 hours from now
   })
