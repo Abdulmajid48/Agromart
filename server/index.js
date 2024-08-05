@@ -3,7 +3,7 @@ import allroutes from "./components/routes.js";
 import dotenv from "dotenv";
 import middleware from "./components/middleware.js";
 
-dotenv.config(); //dotenv
+dotenv.config(); 
 
 const app = express();
 const port = process.env.PORT || 3000; // PORT
@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000; // PORT
 // MIDDLEWARE
 app.use(middleware);
 // Routes
-app.use("/", allroutes);
+app.use(allroutes);
 
 // PORT
 app.listen(port, () => {

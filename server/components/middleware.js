@@ -8,11 +8,11 @@ import db from "./db.js";
 import connectPgSimple from "connect-pg-simple";
 import cookieParser from "cookie-parser";
 
+dotenv.config();
+
 const router = express.Router();
 // Initialize PgSession
 const PgSession = connectPgSimple(session);
-
-dotenv.config();
 
 // MIDDLEWARE
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -40,14 +40,13 @@ router.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 86400000,
-      sameSite: " lax",
+      sameSite: process.NODE_ENV === "production" ? "lax" : "none",
       httpOnly: true,
-      secure: true,
+      secure: process.NODE_ENV === "production",
     },
     //expires: new Date(Date.now() + 86400000), // 24 hours from now
   })
 );
-
 router.use(passport.initialize());
 router.use(passport.session());
 

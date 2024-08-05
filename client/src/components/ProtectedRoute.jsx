@@ -4,21 +4,26 @@ import { createContext, useEffect, useState } from "react";
 export const AuthContext = createContext();
 
 const ProtectedRoute = ({ children }) => {
-  const [user, setUser] = useState(() => ({
-    LoggedIn: false,
-  }));
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
-    try {
-      const result = axios.get("https://agromart-uyly.onrender.com/products", {
-        withCredentials: true,
-      });
-      console.log(result);
-      setUser({ ...result.data });
-    } catch (error) {
-      console.log(error);
-    }
+    const fetchProducts = async () => {
+      try {
+        const result = await axios.get(
+          "https://agromart-uyly.onrender.com/products",
+          {
+            withCredentials: true,
+          }
+        );
+        const data = [result.data];
+        setUser(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchProducts();
   }, []);
+
   return (
     <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
   );

@@ -60,7 +60,6 @@ router.post("/register", async (req, res) => {
           const user = result.rows[0];
           // login User
           req.login(user, (err) => {
-            console.log("sucess");
             return res.json({
               isLoggedIn: "user is certified",
               user: req.user.name,
@@ -96,9 +95,7 @@ router.post("/login", (req, res, next) => {
 });
 
 const isAuth = (req, res, next) => {
-  console.log("isAuth middleware called");
-  console.log("req.user:", req.user);
-  if (req.user) {
+  if (req.isAuthenticated()) {
     return next();
   } else {
     return res.status(401).json({ isLoggedIn: false });
@@ -106,15 +103,12 @@ const isAuth = (req, res, next) => {
 };
 // Products Page
 router.get("/products", isAuth, (req, res) => {
-  console.log("Protected route accessed");
-  console.log("req.user:", req.user);
-  console.log("req.isAuthenticated():", req.isAuthenticated());
-  const user = {
-    ...req.user,
-    isLoggedIn: true,
-  };
-  console.log("User object:", user);
-  res.json(user);
+  if (req.isAuthenticated()) {
+    const { name } = req.user;
+    res.json(name);
+  } else {
+    res.send("Not Authorized");
+  }
 });
 
 export default router;
