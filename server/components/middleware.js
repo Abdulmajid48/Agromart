@@ -18,7 +18,7 @@ const PgSession = connectPgSimple(session);
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.FRONTEND,
     credentials: true,
     methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
     allowedHeaders:
