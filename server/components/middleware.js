@@ -18,7 +18,7 @@ const PgSession = connectPgSimple(session);
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(
   cors({
-    origin: process.env.FRONTEND,
+    origin: "http://localhost:5173",
     credentials: true,
     methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
     allowedHeaders:
@@ -40,9 +40,9 @@ router.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 86400000,
-      sameSite: "lax",
-      httpOnly: true,
-      secure: true,
+      // sameSite: "lax",
+      // httpOnly: true,
+      // secure: true,
     },
     //expires: new Date(Date.now() + 86400000), // 24 hours from now
   })
