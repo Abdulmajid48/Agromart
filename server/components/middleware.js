@@ -40,9 +40,9 @@ router.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 86400000,
-      // sameSite: "lax",
-      // httpOnly: true,
-      // secure: true,
+      sameSite: "lax",
+      httpOnly: true,
+      secure: true,
     },
     //expires: new Date(Date.now() + 86400000), // 24 hours from now
   })
