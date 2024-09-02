@@ -6,15 +6,13 @@ export const AuthContext = createContext();
 const ProtectedRoute = ({ children }) => {
   const [user, setUser] = useState([]);
 
+  const url = import.meta.VITE_BACKEND;
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const result = await axios.get(
-          "https://agromart-uyly.onrender.com/products",
-          {
-            withCredentials: true,
-          }
-        );
+        const result = await axios.get(` ${url}/products`, {
+          withCredentials: true,
+        });
         const data = [result.data];
         setUser(data);
       } catch (error) {
@@ -22,7 +20,7 @@ const ProtectedRoute = ({ children }) => {
       }
     };
     fetchProducts();
-  }, []);
+  }, [url]);
 
   return (
     <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
