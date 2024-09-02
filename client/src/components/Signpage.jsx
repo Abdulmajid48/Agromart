@@ -38,7 +38,7 @@ function Signpage(props) {
       return !preValue;
     });
   }
-  const url = "https://agromart-db.vercel.app";
+
   const config = {
     withCredentials: true,
     headers: {
@@ -52,7 +52,7 @@ function Signpage(props) {
     const { fullname, email, password } = formData;
     try {
       const res = await axios.post(
-        `${url}/register`,
+        `https://agromart-uyly.onrender.com/register`,
         {
           fullname,
           email,
@@ -77,7 +77,7 @@ function Signpage(props) {
     const { email, password } = formData;
     try {
       const res = await axios.post(
-        `${url}/login`,
+        `https://agromart-uyly.onrender.com/login`,
         {
           email,
           password,
@@ -98,7 +98,7 @@ function Signpage(props) {
   };
 
   const handleGoogle = async () => {
-    const str = `${url}/auth/google`;
+    const str = "https://agromart-uyly.onrender.com/auth/google";
     window.open(str, "self");
   };
   // --------------------------------------------------------------------------//
