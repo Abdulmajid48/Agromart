@@ -53,7 +53,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://agromart-uyly.onrender.com/auth/google/products",
+      callbackURL: `${process.env.BACKEND}/auth/google/products`,
       scope: ["profile", "email"],
     },
     async (accessToken, refreshToken, profile, done) => {
