@@ -38,7 +38,7 @@ function Signpage(props) {
       return !preValue;
     });
   }
-
+  const url = import.meta.VITE_BACKEND;
   const config = {
     withCredentials: true,
     headers: {
@@ -52,7 +52,7 @@ function Signpage(props) {
     const { fullname, email, password } = formData;
     try {
       const res = await axios.post(
-        `https://agromart-uyly.onrender.com/register`,
+        `${url}/register`,
         {
           fullname,
           email,
@@ -77,7 +77,7 @@ function Signpage(props) {
     const { email, password } = formData;
     try {
       const res = await axios.post(
-        `https://agromart-uyly.onrender.com/login`,
+        `${url}/login`,
         {
           email,
           password,
@@ -98,7 +98,7 @@ function Signpage(props) {
   };
 
   const handleGoogle = async () => {
-    const str = "https://agromart-uyly.onrender.com/auth/google";
+    const str = `${url}/auth/google`;
     window.open(str, "self");
   };
   // --------------------------------------------------------------------------//
