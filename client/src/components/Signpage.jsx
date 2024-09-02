@@ -38,7 +38,7 @@ function Signpage(props) {
       return !preValue;
     });
   }
-  const url = import.meta.VITE_BACKEND;
+  const url = "https://agromart-db.vercel.app";
   const config = {
     withCredentials: true,
     headers: {
