@@ -1,11 +1,11 @@
--- Your existing users table
+-- Your existing users table --
 CREATE TABLE users(
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(100)
 );
--- New session table for connect-pg-simple
+-- New session table for connect-pg-simple --
 CREATE TABLE "session" (
     "sid" varchar NOT NULL COLLATE "default",
     "sess" json NOT NULL,
