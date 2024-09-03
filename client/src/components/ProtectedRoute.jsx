@@ -10,7 +10,7 @@ const ProtectedRoute = ({ children }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const result = await axios.get(` ${url}/products`, {
+        const result = await axios.get(`${url}/products`, {
           withCredentials: true,
         });
         const data = [result.data];
