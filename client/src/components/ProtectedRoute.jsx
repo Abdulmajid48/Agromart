@@ -6,7 +6,7 @@ export const AuthContext = createContext();
 const ProtectedRoute = ({ children }) => {
   const [user, setUser] = useState([]);
 
-  const url = import.meta.VITE_BACKEND;
+  const url = import.meta.env.VITE_BACKEND;
   useEffect(() => {
     const fetchProducts = async () => {
       try {
