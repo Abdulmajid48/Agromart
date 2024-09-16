@@ -38,7 +38,7 @@ function Signpage(props) {
       return !preValue;
     });
   }
-  const url = import.meta.env.VITE_BACKEND;
+  const url = import.meta.env.VITE_BACKEND; //backend url
   const config = {
     withCredentials: true,
     headers: {
