@@ -20,7 +20,7 @@ const ProtectedRoute = ({ children }) => {
       }
     };
     fetchProducts();
-  }, []);
+  }, [url]);
 
   return (
     <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
