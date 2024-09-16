@@ -40,7 +40,7 @@ router.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 86400000,
-      sameSite: "lax",
+      sameSite: "none",
       httpOnly: true,
       secure: true,
     },
