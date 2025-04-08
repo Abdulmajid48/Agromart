@@ -25,13 +25,13 @@ router.use(
       "Origin, X-Requested-With, Content-Type, Accept, Authorization",
   })
 );
-router.use(express.json());
+router.use(express.json()); 
 router.use(cookieParser(process.env.SESSION_SECRET));
 router.use(
   session({
     store: new PgSession({
       pool: db,
-      tableName: "session", // You can customize the session table name
+      tableName: "session", //  You can customize the session table name
       pruneSessionInterval: 60 * 15,
       errorLog: console.error.bind(console),
     }),
@@ -43,6 +43,9 @@ router.use(
       sameSite: "lax",
       httpOnly: true,
       secure: true,
+      // add request.session.visited = true to the root api
+      // request.sessionStore.get(request.session.id, callback with err and sessionData as input)
+      // request.session.user
     },
     //expires: new Date(Date.now() + 86400000), // 24 hours from now
   })
